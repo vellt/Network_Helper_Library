@@ -30,9 +30,11 @@ string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 ```
 
-## POST hívás kiépítése
+-------------
 
-**body tartalma**: Dictinonary (kulcs érték). Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
+## POST hívás kiépítése
+### A body tartalma: Dictinonary {kulcs, érték}.
+> Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dictionary<string, string> {
@@ -43,7 +45,8 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dic
     { "bevitel5", "default.jpg" },
 });
 ```
-**body tartalma**: Osztály típus, amely egy táblát reprezentál. Itt a kulcsok a property (tulajonság) nevének megfelelően fog elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+### A body tartalma: Osztály típus
+> Az osztály egy táblát reprezentál. Itt a kulcsok a property (tulajonság) nevének megfelelően fog elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Idoutazo {
@@ -54,7 +57,8 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Id
     szuletesi_datum = DateTime.Now,
 });
 ```
-**body tartalma**: string lista, a kulcs értékek háttérben dinamikusan készülnek el, (bevitel**n** | n ∈ [1, lista.length]) mintázattal. Pl.: bevitel1, bevitel2, bevitel**n**. Ebből következik, hogy ennél kifejezetten számít a sorrend. Hiszen aszerint lesznek indexelve.
+### A body tartalma: string lista
+> A kulcs értékek háttérben dinamikusan készülnek el, (bevitel**n** | n ∈ [1, lista.length]) mintázattal. Pl.: bevitel1, bevitel2, bevitel**n**. Ebből következik, hogy ennél kifejezetten számít a sorrend. Hiszen aszerint lesznek indexelve.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new List<string> {
@@ -68,14 +72,14 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
 -------------
 
 ## BackendValasz-ból adatkinyerés
-ResponseAsObject függvénnyel, objektumként kapjuk vissza a fetch-elt adatot.
+**ResponseAsObject** függvénnyel, objektumként kapjuk vissza a fetch-elt adatot.
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 List<Idoutazo> idoutazok = idoutazokValasz.ResponseAsObject<Idoutazo>(); // háttérben Json deserializálás történik
 ```
 
-vagy rövidebben, láncolt alakban egyből adatlekérdezés és kiíratás:
+> vagy rövidebben, láncolt alakban egyből adatlekérdezés és kiíratás:
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendHivas.Kuldese(url, Methods.GET)
@@ -83,7 +87,7 @@ BackendHivas.Kuldese(url, Methods.GET)
     .ForEach(x => Console.WriteLine($"{x.id} {x.TeljesNev()} ({x.szuletesi_datum.Year})"));
 ```
 
-ResponseAsJson függvénnyel, a backendtől visszakapott JSON-t tudjuk kinyerni
+**ResponseAsJson** függvénnyel, a backendtől visszakapott JSON-t tudjuk kinyerni
 ```C#
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Dictionary<string, string> {
     { "bevitel1", "vezeteknev" },
