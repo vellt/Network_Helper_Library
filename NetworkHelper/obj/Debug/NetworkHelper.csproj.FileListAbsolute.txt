@@ -1,0 +1,18 @@
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.AssemblyReference.cache
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CoreCompileInputs.cache
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\bin\Debug\NetworkHelper.dll
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\bin\Debug\NetworkHelper.pdb
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CopyComplete
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.dll
+C:\Users\Szántó Benjámin\source\repos\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.pdb
+C:\NetworkHelper\NetworkHelper\bin\Debug\NetworkHelper.dll
+C:\NetworkHelper\NetworkHelper\bin\Debug\NetworkHelper.pdb
+C:\NetworkHelper\NetworkHelper\bin\Debug\Newtonsoft.Json.dll
+C:\NetworkHelper\NetworkHelper\bin\Debug\Newtonsoft.Json.xml
+C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.AssemblyReference.cache
+C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CoreCompileInputs.cache
+C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CopyComplete
+C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.dll
+C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.pdb
