@@ -72,7 +72,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
 -------------
 
 ## BackendValasz-ból adatkinyerés
-**ResponseAsObject** függvénnyel, objektumként kapjuk vissza a fetch-elt adatot.
+**ResponseAsObject** függvénnyel, objektumként kapjuk vissza a fetch-elt adatot. A generitikusan megadott Osztály típus property neveinek karakterpontosnak kell lennie, az adatbázis mezőivel.
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
