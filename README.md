@@ -33,7 +33,7 @@ BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 -------------
 
 ## POST hívás kiépítése
-### Ha a body tartalma: Dictinonary {kulcs, érték}.
+### Ha a body tartalma: Dictionary {kulcs, érték}.
 > Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
