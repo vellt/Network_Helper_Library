@@ -5,7 +5,9 @@
 - Támogatottság: .NET Framework 4.7.2 vagy újjabb
 
 ## Első lépések
-- az alábbi linken elérhető kettő dll-t (könyvtárat) töltse le
+- A releases fülön található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
+    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.1/NetworkHelper.dll)
+    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.1/Newtonsoft.Json.dll)
 - A solution explorerben lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lett lévő gombok közül kattintson a "Browse..." felíratú gombra.
 Ekkor betöltődik a fájlkezelő, segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
