@@ -33,7 +33,7 @@ BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 -------------
 
 ## POST hívás kiépítése
-### A body tartalma: Dictinonary {kulcs, érték}.
+### Ha a body tartalma: Dictinonary {kulcs, érték}.
 > Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
@@ -45,7 +45,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dic
     { "bevitel5", "default.jpg" },
 });
 ```
-### A body tartalma: Osztály típus
+### Ha a body tartalma: Osztály típus
 > Az osztály egy táblát reprezentál. Itt a kulcsok a property (tulajonság) nevének megfelelően fog elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
@@ -57,7 +57,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Id
     szuletesi_datum = DateTime.Now,
 });
 ```
-### A body tartalma: string lista
+### Ha a body tartalma: string lista
 > A kulcs értékek háttérben dinamikusan készülnek el, (bevitel**n** | n ∈ [1, lista.length]) mintázattal. Pl.: bevitel1, bevitel2, bevitel**n**. Ebből következik, hogy ennél kifejezetten számít a sorrend. Hiszen aszerint lesznek indexelve.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
