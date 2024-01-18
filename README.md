@@ -118,7 +118,7 @@ if (!idohurkokValasz.Error)
     idohurkok.ForEach(x => Console.WriteLine($"{x.id} {x.kezdeti_datum} {x.veg_datum} {x.esemeny_nev}"));
 }
 ```
-> vagy egy body-s http hívás
+> vagy éppen egy body tartalmú http kéréssel is ugyan ezt megtehetjük
 ```C#
 string url = "http://localhost:3000/utanpotlas";
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new List<string> {
