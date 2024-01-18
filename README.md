@@ -2,6 +2,7 @@
 
 - A NetworkHelper egy könyvtár, amely megkönnyíti a backend kommunikációt .NET Framework, C# projeketben.
 - Függősége: Newtonsoft.Json (13.0.3), amely a hálózati hívás során kapott JSON adatok, Objektumokká történő deserializálásáért felel.
+- Verzió: v0.0.2
 - Támogatottság: .NET Framework 4.7.2 vagy újjabb
 
 ## Első lépések
