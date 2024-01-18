@@ -17,11 +17,13 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 
 # Használata
 
-A könyvtárban az alábbi HTTP hívások elérhetőek:
-- GET
-- POST
-- PUT
-- DELETE
+## A könyvtárban az alábbi `HTTP kérések` elérhetőek:
+    | Metódus | Leírás                                     
+    |---------|-----------------------------------------------------------------------------------
+    | GET     | adat olvasás (fetch)                       
+    | POST    | adat létrehozás                            
+    | PUT     | adat módosítás                             
+    | DELETE  | adat törlés                                
 
 -------------
 
