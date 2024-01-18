@@ -107,7 +107,7 @@ string json= utanpotlasValasz.Json;
 -------------
 
 ## Hibakezelés
-hibakezelést a belső Error property teszi lehetővé, érdemes minden adatkinyeréskor megvizsgálni, hogy hibamentesen tudott-e adatot lehívni. Ekkor már biztonságosan fogunk tudni lekérni a BackendValasz osztálytól adatot. pl.:
+hibakezelést a belső `Error` property teszi lehetővé, érdemes minden adatkinyeréskor megvizsgálni, hogy hibamentesen tudott-e adatot lehívni. Ekkor már biztonságosan fogunk tudni lekérni a BackendValasz osztálytól adatot. pl.:
 ```C#
 string url = "http://localhost:3000/idohurkok";
 BackendValasz idohurkokValasz = BackendHivas.Kuldese(url, Methods.GET);
