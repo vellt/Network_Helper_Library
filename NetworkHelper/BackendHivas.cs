@@ -10,42 +10,64 @@ using System.Threading.Tasks;
 
 namespace NetworkHelper
 {
+    /// <summary>
+    /// Hálózati hívás módjait definiáló felsorolás.
+    /// </summary>
     public enum Methods
     {
         GET, POST, PUT, DELETE
     }
+
+    /// <summary>
+    /// A backend válaszához férünk hozzá általa
+    /// </summary>
     public class BackendValasz
     {
         /// <summary>
-        /// Hiba képződik:
-        /// - Ha nem létezik a backend útvonal
-        /// - Ha egy http prtotkolt helyett https protokollal van megadva az útvonal
-        /// - Ha a backend útvonal létezik, de az nem támogatja a példányosítás sorám megadott (GET, PUT, POST, DELETE) protokolt
-        /// - Ha a GET hivásba body tartalom van helyezve
-        /// - Ha a body.count az 0-val egyenlő
+        /// Hibát jelzi, ha a kérés során probléma merül fel.
         /// </summary>
+        /// <remarks>
+        /// Hiba képződhet, ha:
+        /// <br/>- nem létezik a backend útvonal
+        /// <br/>- egy HTTP protokolt helyett HTTPS protokollal van megadva az útvonal
+        /// <br/>- a backend útvonal létezik, de az nem támogatja a példányosítás során megadott (GET, PUT, POST, DELETE) protokolt
+        /// <br/>- a GET hívásba body tartalom van helyezve
+        /// <br/>- a body.Count 0-val egyenlő
+        /// </remarks>
+
         public bool Error { get; set; } = false;
-        private string Json = "";
+        private string json = "";
+        /// <summary>
+        /// A backend válaszát JSON formában adja vissza.
+        /// </summary>
+        public string Json => json;
 
         public BackendValasz(string json, bool error)
         {
             Error = error;
-            Json = json;
+            this.json = json;
         }
 
-        public string ResponseAsJson()
-        {
-            return Json;
-        }
 
-        public List<T> ResponseAsObject<T>()
+        /// <summary>
+        /// JSON választ deszerializáló metódus. 
+        /// Az átadott osztálynak megfelelő listával tér vissza.
+        /// </summary>
+        public List<T> List<T>()
         {
             return JsonConvert.DeserializeObject<List<T>>(Json);
         }
 
     }
+
+    /// <summary>
+    /// A háttérhívásokat kezelő osztály.
+    /// </summary>
     public static class BackendHivas
     {
+        /// <summary>
+        /// Backend-re történő egyszerű kérést indító függvény.
+        /// </summary>
         public static BackendValasz Kuldese(string url, Methods method)
         {
             var request = WebRequest.Create(url);
@@ -69,6 +91,9 @@ namespace NetworkHelper
             }
         }
 
+        /// <summary>
+        /// Backend-re adatokkal történő kérést indító függvény.
+        /// </summary>
         public static BackendValasz Kuldese(string url, Methods method, List<string> body)
         {
             // kérés elkészítése
@@ -104,6 +129,9 @@ namespace NetworkHelper
             }
         }
 
+        /// <summary>
+        /// Backend-re adatokkal történő kérést indító függvény.
+        /// </summary>
         public static BackendValasz Kuldese(string url, Methods method, Dictionary<string, string> body)
         {
             // kérés elkészítése
@@ -138,6 +166,9 @@ namespace NetworkHelper
         }
 
 
+        /// <summary>
+        /// Backend-re adatokkal történő kérést indító függvény.
+        /// </summary>
         public static BackendValasz Kuldese<T>(string url, Methods method, T body)
         {
             // kérés elkészítése
