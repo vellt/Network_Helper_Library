@@ -50,7 +50,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dic
 > Az osztály egy táblát reprezentál. Itt a kulcsok a property (tulajonság) nevének megfelelően fog elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Idoutazo {
+BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Idoutazo {
     neme = 0,
     vezeteknev = "Vin",
     keresztnev = "Dizella",
