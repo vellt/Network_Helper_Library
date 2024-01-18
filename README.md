@@ -9,7 +9,7 @@
 - A repo releases fülén található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
     - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.2/NetworkHelper.dll)
     - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.2/Newtonsoft.Json.dll)
-- Ezt követően a .Net-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lett lévő gombok közül kattintson a "Browse..." felíratú gombra.
+- Ezt követően a .Net-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lentt lévő gombok közül kattintson a "Browse..." felíratú gombra.
 Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
 
@@ -36,18 +36,6 @@ BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 -------------
 
 ## `POST` kérés kiépítése
-### Ha a body tartalma: `Dictionary` {kulcs, érték}.
-> Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
-```C#
-string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dictionary<string, string> {
-    { "bevitel1", "vezeteknev" },
-    { "bevitel2", "keresztnev" },
-    { "bevitel3", "0" },
-    { "bevitel4", "1900-12-02" },
-    { "bevitel5", "default.jpg" },
-});
-```
 ### Ha a body tartalma: `Osztály` típusú objektum
 > Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
@@ -58,6 +46,18 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Ido
     keresztnev = "Dizella",
     kep = "default.jpg",
     szuletesi_datum = DateTime.Now,
+});
+```
+### Ha a body tartalma: `Dictionary` {kulcs, érték}.
+> Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
+```C#
+string url = "http://localhost:3000/utanpotlas";
+BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dictionary<string, string> {
+    { "bevitel1", "vezeteknev" },
+    { "bevitel2", "keresztnev" },
+    { "bevitel3", "0" },
+    { "bevitel4", "1900-12-02" },
+    { "bevitel5", "default.jpg" },
 });
 ```
 ### Ha a body tartalma: string `lista`
