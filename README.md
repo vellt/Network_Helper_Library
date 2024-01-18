@@ -25,7 +25,7 @@ A könyvtárban az alábbi HTTP hívások elérhetőek:
 
 -------------
 
-## GET hívás kiépítse
+## `GET` hívás kiépítse
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
@@ -33,8 +33,8 @@ BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 
 -------------
 
-## POST hívás kiépítése
-### Ha a body tartalma: Dictionary {kulcs, érték}.
+## `POST` hívás kiépítése
+### Ha a body tartalma: `Dictionary` {kulcs, érték}.
 > Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
@@ -46,7 +46,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dic
     { "bevitel5", "default.jpg" },
 });
 ```
-### Ha a body tartalma: Osztály típus
+### Ha a body tartalma: `Osztály` típusú objektum
 > Az osztály egy táblát reprezentál. Itt a kulcsok a property (tulajonság) nevének megfelelően fog elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
@@ -58,7 +58,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Ido
     szuletesi_datum = DateTime.Now,
 });
 ```
-### Ha a body tartalma: string lista
+### Ha a body tartalma: string `lista`
 > A kulcs értékek háttérben dinamikusan készülnek el, (bevitel**n** | n ∈ [1, lista.length]) mintázattal. Pl.: bevitel1, bevitel2, bevitel**n**. Ebből következik, hogy ennél kifejezetten számít a sorrend. Hiszen aszerint lesznek indexelve.
 ```C#
 string url = "http://localhost:3000/utanpotlas";
@@ -73,7 +73,8 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
 -------------
 
 ## BackendValasz-ból adatkinyerés
-**List** publikus függvénnyel, objektumként kapjuk vissza a fetch-elt adatot. A generitikusan megadott Osztály típus property neveinek karakterpontosnak kell lennie, az adatbázis mezőivel.
+### `List` publikus függvénnyel
+> objektumként kapjuk vissza a fetch-elt adatot. A generitikusan megadott Osztály típus property neveinek karakterpontosnak kell lennie, az adatbázis mezőivel.
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
@@ -88,7 +89,8 @@ BackendHivas.Kuldese(url, Methods.GET)
     .ForEach(x => Console.WriteLine($"{x.id} {x.TeljesNev()} ({x.szuletesi_datum.Year})"));
 ```
 
-**Json** publikus tulajdonság, a backendtől visszakapott JSON-t tudjuk kinyerni
+### `Json` publikus tulajdonsággal
+> a backendtől visszakapott JSON-t tudjuk kinyerni
 ```C#
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Dictionary<string, string> {
     { "bevitel1", "vezeteknev" },
@@ -113,7 +115,7 @@ if (!idohurkokValasz.Error)
     idohurkok.ForEach(x => Console.WriteLine($"{x.id} {x.kezdeti_datum} {x.veg_datum} {x.esemeny_nev}"));
 }
 ```
-vagy 
+> vagy egy body-s http hívás
 ```C#
 string url = "http://localhost:3000/utanpotlas";
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new List<string> {
