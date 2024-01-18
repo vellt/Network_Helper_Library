@@ -72,22 +72,22 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
 -------------
 
 ## BackendValasz-ból adatkinyerés
-**ResponseAsObject** függvénnyel, objektumként kapjuk vissza a fetch-elt adatot. A generitikusan megadott Osztály típus property neveinek karakterpontosnak kell lennie, az adatbázis mezőivel.
+**List** publikus függvénnyel, objektumként kapjuk vissza a fetch-elt adatot. A generitikusan megadott Osztály típus property neveinek karakterpontosnak kell lennie, az adatbázis mezőivel.
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
-List<Idoutazo> idoutazok = idoutazokValasz.ResponseAsObject<Idoutazo>(); // háttérben Json deserializálás történik
+List<Idoutazo> idoutazok = idoutazokValasz.List<Idoutazo>(); // háttérben Json deserializálás történik
 ```
 
 > vagy rövidebben, láncolt alakban egyből adatlekérdezés és kiíratás:
 ```C#
 string url = "http://localhost:3000/idoutazok";
 BackendHivas.Kuldese(url, Methods.GET)
-    .ResponseAsObject<Idoutazo>()
+    .List<Idoutazo>()
     .ForEach(x => Console.WriteLine($"{x.id} {x.TeljesNev()} ({x.szuletesi_datum.Year})"));
 ```
 
-**ResponseAsJson** függvénnyel, a backendtől visszakapott JSON-t tudjuk kinyerni
+**Json** publikus tulajdonság, a backendtől visszakapott JSON-t tudjuk kinyerni
 ```C#
 BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Dictionary<string, string> {
     { "bevitel1", "vezeteknev" },
@@ -96,7 +96,7 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Di
     { "bevitel4", "1900-12-02" },
     { "bevitel5", "default.jpg" },
 });
-string json= utanpotlasValasz.ResponseAsJson();
+string json= utanpotlasValasz.Json;
 ```
 
 -------------
@@ -108,7 +108,7 @@ string url = "http://localhost:3000/idohurkok";
 BackendValasz idohurkokValasz = BackendHivas.Kuldese(url, Methods.GET);
 if (!idohurkokValasz.Error)
 {
-    List<Idohurok> idohurkok = idohurkokValasz.ResponseAsObject<Idohurok>();
+    List<Idohurok> idohurkok = idohurkokValasz.List<Idohurok>();
     idohurkok.ForEach(x => Console.WriteLine($"{x.id} {x.kezdeti_datum} {x.veg_datum} {x.esemeny_nev}"));
 }
 ```
@@ -122,5 +122,5 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
     "1900-12-02",
     "default.jpg",
 });
-if (!utanpotlasValasz.Error) Console.WriteLine(utanpotlasValasz.ResponseAsJson());
+if (!utanpotlasValasz.Error) Console.WriteLine(utanpotlasValasz.Json;
 ```
