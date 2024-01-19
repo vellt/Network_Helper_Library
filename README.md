@@ -13,6 +13,8 @@
 Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
 
+<br>
+
 -------------
 
 # Használata
@@ -23,7 +25,10 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
     | GET     | adat olvasás (fetch)                       
     | POST    | adat létrehozás                            
     | PUT     | adat módosítás                             
-    | DELETE  | adat törlés                                
+    | DELETE  | adat törlés                    
+
+
+<br>
 
 -------------
 
@@ -32,6 +37,8 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 string url = "http://localhost:3000/idoutazok";
 BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
 ```
+
+<br>
 
 -------------
 
@@ -72,6 +79,9 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
     "default.jpg",
 });
 ```
+
+<br>
+
 -------------
 
 ## BackendValasz-ból adatkinyerés
@@ -104,7 +114,11 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Di
 string json= utanpotlasValasz.Json;
 ```
 
+<br>
+
 -------------
+
+
 
 ## Hibakezelés
 ### Hibakezelést a BackendValasz publikus `Error` tulajdonsága teszi lehetővé
@@ -130,3 +144,28 @@ BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Lis
 });
 if (!utanpotlasValasz.Error) Console.WriteLine(utanpotlasValasz.Json;
 ```
+<br>
+
+-------------
+
+# A könyvtár Szerkezete
+
+## Osztály diagram
+
+    +------------------+       +-----------------------+       +-----------------------------------+
+    |    Methods       |       |    BackendValasz      |       |   BackendHivas                    |
+    +------------------+       +-----------------------+       +-----------------------------------+
+    | GET              |       | Error: bool           |       | + Kuldese(url, method)            |
+    | POST             |       | Json: string          |       | + Kuldese(url, method, body)      |
+    | PUT              |       | + BackendValasz()     |       | + Kuldese(url, method, body)      |
+    | DELETE           |       | + List<T>()           |       | + Kuldese<T>(url, method, T body) |
+    +------------------+       +-----------------------+       +-----------------------------------+
+
+
+![](https://raw.githubusercontent.com/vellt/Network_Helper_Library/master/ClassDiagram1.png)
+
+## A könvytárban használt design patternek
+### `Builder Pattern`
+> A BackendHivas osztály Kuldese függvény feladata, hogy felépítse a BackendValasz objektumot, különböző értékekkel felkonfigurálva azt.
+### `Strategy Pattern`  
+> A kódban az Methods felsorolás a Strategy Design Pattern-t használja. A Methods felsorolásban különböző kéréstípusok vannak definiálva, és ezeket a kéréseket a BackendHivas osztály különböző metódusai használják. Ez lehetővé teszi a különböző kéréstípusok dinamikus kiválasztását és alkalmazását.
