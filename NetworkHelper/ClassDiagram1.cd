@@ -1,2 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NetworkHelper.BackendValasz">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAACAAAAAgI=</HashCode>
+      <FileName>BackendHivas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkHelper.BackendHivas">
+    <Position X="10.25" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BackendHivas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="NetworkHelper.Methods">
+    <Position X="10.25" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAEAQAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BackendHivas.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
