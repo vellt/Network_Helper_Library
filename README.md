@@ -156,8 +156,8 @@ if (!utanpotlasValasz.Error) Console.WriteLine(utanpotlasValasz.Json;
     |    Methods       |       |    BackendValasz      |       |   BackendHivas                    |
     +------------------+       +-----------------------+       +-----------------------------------+
     | GET              |       | Error: bool           |       | + Kuldese(url, method)            |
-    | POST             |       | Json: string          |       | + Kuldese(url, method, body)      |                           
-    | PUT              |       | + BackendValasz()     |       | + Kuldese(url, method, body)      |                          
+    | POST             |       | Json: string          |       | + Kuldese(url, method, body)      |
+    | PUT              |       | + BackendValasz()     |       | + Kuldese(url, method, body)      |
     | DELETE           |       | + List<T>()           |       | + Kuldese<T>(url, method, T body) |
     +------------------+       +-----------------------+       +-----------------------------------+
 
