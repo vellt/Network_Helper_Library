@@ -22,7 +22,7 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 
 <br><br>
 
-# Használata
+# Backend statikus osztály használata
 
 ## A könyvtárban az alábbi `HTTP kérések` elérhetőek:
     | Metódus | Leírás                                     
