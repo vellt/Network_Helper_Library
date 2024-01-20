@@ -94,7 +94,8 @@ Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12 }).Send().Messa
 ### `StatusCode` publikus tulajdonsággal
 > Visszakapjuk, hogy a kérés milyen státuszkóddal tért vissza. (OK==200, stb stb..)
 ```C#
-Response response = Backend.POST(url).Body(new Student { phone = "12132", name = "Sanyi", email = "email" }).Send();
+Student student = new Student { phone="12132", name="Sanyi", email="email" };
+Response response = Backend.POST(url).Body(student).Send();
 if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
 ```
 
