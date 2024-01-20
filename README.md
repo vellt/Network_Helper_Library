@@ -7,15 +7,14 @@
 
 ## Első lépések
 - A repo releases fülén található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
-    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.2/NetworkHelper.dll)
-    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.2/Newtonsoft.Json.dll)
+    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/NetworkHelper.dll)
+    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/Newtonsoft.Json.dll)
 - Ezt követően a .Net-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lentt lévő gombok közül kattintson a "Browse..." felíratú gombra.
 Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
 
-<br>
 
--------------
+<br><br>
 
 # Használata
 
@@ -28,144 +27,75 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
     | DELETE  | adat törlés                    
 
 
-<br>
-
+<br><br>
 -------------
 
 ## `GET` kérés kiépítse
 ```C#
-string url = "http://localhost:3000/idoutazok";
-BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
+string url = "http://localhost:3000/students";
+Backend.GET(url).Send();
 ```
-
-<br>
 
 -------------
 
 ## `POST` kérés kiépítése
-### Ha a body tartalma: `Osztály` típusú objektum
-> Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
-string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Idoutazo {
-    neme = 0,
-    vezeteknev = "Vin",
-    keresztnev = "Dizella",
-    kep = "default.jpg",
-    szuletesi_datum = DateTime.Now,
-});
+string url = "http://localhost:3000/students";
+Student student = new Student { phone="12132", name="Sanyi", email="email"};
+Backend.POST(url).Body(student).Send();
 ```
-### Ha a body tartalma: `Dictionary` {kulcs, érték}.
-> Ekkor a kulcsokat a backendnek megfelelően tudjuk megválasztani.
-```C#
-string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new Dictionary<string, string> {
-    { "bevitel1", "vezeteknev" },
-    { "bevitel2", "keresztnev" },
-    { "bevitel3", "0" },
-    { "bevitel4", "1900-12-02" },
-    { "bevitel5", "default.jpg" },
-});
-```
-### Ha a body tartalma: string `lista`
-> A kulcs értékek háttérben dinamikusan készülnek el, (bevitel**n** | n ∈ [1, lista.length]) mintázattal. Pl.: bevitel1, bevitel2, bevitel**n**. Ebből következik, hogy ennél kifejezetten számít a sorrend. Hiszen aszerint lesznek indexelve.
-```C#
-string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new List<string> {
-    "vezeteknev",
-    "keresztnev",
-    "0",
-    "1900-12-02",
-    "default.jpg",
-});
-```
-
-<br>
 
 -------------
 
-## BackendValasz-ból adatkinyerés
-### `List` publikus függvénnyel
+## `PUT` kérés kiépítése
+> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+```C#
+string url = "http://localhost:3000/students";
+Student student = new Student { id = 11, name="Bela" };
+Backend.PUT(url).Body(student).Send();
+```
+
+-------------
+
+## `DELETE` kérés kiépítése
+#### Body-val történő azonosítás
+> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+```C#
+string url = "http://localhost:3000/students";
+Backend.DELETE(url).Body(new Student { id = 11 }).Send();
+```
+#### URL paraméteres azonosítás
+> Ebben az esetben már nincs szükségünk a body láncolatra, hiszen az URL tartalmazza az azonosítóját a törlésre szánt entiásnak.
+```C#
+string url = "http://localhost:3000/students/1";
+Backend.DELETE(url).Send();
+```
+
+<br><br>
+
+## Response-ból adatkinyerés
+### `ToList` publikus függvénnyel
 > Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik.
 ```C#
-string url = "http://localhost:3000/idoutazok";
-BackendValasz idoutazokValasz = BackendHivas.Kuldese(url, Methods.GET);
-List<Idoutazo> idoutazok = idoutazokValasz.List<Idoutazo>(); 
+List<Student> idoutazok =  Backend.GET(url).Send().ToList<Student>();
 ```
 
-> vagy rövidebben, láncolt alakban egyből adatlekérdezés és kiíratás:
+### `Message` publikus tulajdonsággal
+> a backendtől visszakapott üzenetet tudjuk kinyerni, például kiírathatjuk, hogy `Sikeres Törlés!` vagy `Hiba!`
 ```C#
-string url = "http://localhost:3000/idoutazok";
-BackendHivas.Kuldese(url, Methods.GET)
-    .List<Idoutazo>()
-    .ForEach(x => Console.WriteLine($"{x.id} {x.TeljesNev()} ({x.szuletesi_datum.Year})"));
+Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12}).Send().Message);
 ```
 
-### `Json` publikus tulajdonsággal
+### `StatusCode` publikus tulajdonsággal
 > a backendtől visszakapott JSON-t tudjuk kinyerni
 ```C#
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url2, Methods.POST, new Dictionary<string, string> {
-    { "bevitel1", "vezeteknev" },
-    { "bevitel2", "keresztnev" },
-    { "bevitel3", "0" },
-    { "bevitel4", "1900-12-02" },
-    { "bevitel5", "default.jpg" },
-});
-string json= utanpotlasValasz.Json;
+Response response = Backend.POST(url).Body(new Student { phone = "12132", name = "Sanyi", email = "email" }).Send();
+if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
 ```
 
-<br>
+<br><br>
 
--------------
-
-
-
-## Hibakezelés
-### Hibakezelést a BackendValasz publikus `Error` tulajdonsága teszi lehetővé
-> Érdemes minden adatkinyeréskor megvizsgálni, hogy hibamentesen tudott-e adatot lehívni. Ekkor már biztonságosan fogunk tudni lekérni a BackendValasz osztálytól adatot. pl.:
-```C#
-string url = "http://localhost:3000/idohurkok";
-BackendValasz idohurkokValasz = BackendHivas.Kuldese(url, Methods.GET);
-if (!idohurkokValasz.Error)
-{
-    List<Idohurok> idohurkok = idohurkokValasz.List<Idohurok>();
-    idohurkok.ForEach(x => Console.WriteLine($"{x.id} {x.kezdeti_datum} {x.veg_datum} {x.esemeny_nev}"));
-}
-```
-> vagy éppen egy body tartalmú http kéréssel is ugyan ezt megtehetjük
-```C#
-string url = "http://localhost:3000/utanpotlas";
-BackendValasz utanpotlasValasz = BackendHivas.Kuldese(url, Methods.POST, new List<string> {
-    "vezeteknev",
-    "keresztnev",
-    "0",
-    "1900-12-02",
-    "default.jpg",
-});
-if (!utanpotlasValasz.Error) Console.WriteLine(utanpotlasValasz.Json;
-```
-<br>
-
--------------
 
 # A könyvtár Szerkezete
-
-## Osztály diagram
-
-    +------------------+       +-----------------------+       +-----------------------------------+
-    |    Methods       |       |    BackendValasz      |       |   BackendHivas                    |
-    +------------------+       +-----------------------+       +-----------------------------------+
-    | GET              |       | Error: bool           |       | + Kuldese(url, method)            |
-    | POST             |       | Json: string          |       | + Kuldese(url, method, body)      |
-    | PUT              |       | + BackendValasz()     |       | + Kuldese(url, method, body)      |
-    | DELETE           |       | + List<T>()           |       | + Kuldese<T>(url, method, T body) |
-    +------------------+       +-----------------------+       +-----------------------------------+
-
-
-![](https://raw.githubusercontent.com/vellt/Network_Helper_Library/master/ClassDiagram1.png)
-
-## A könvytárban használt design patternek
-### `Builder Pattern`
-> A BackendHivas osztály Kuldese függvény feladata, hogy felépítse a BackendValasz objektumot, különböző értékekkel felkonfigurálva azt.
-### `Strategy Pattern`  
-> A kódban az Methods felsorolás a Strategy Design Pattern-t használja. A Methods felsorolásban különböző kéréstípusok vannak definiálva, és ezeket a kéréseket a BackendHivas osztály különböző metódusai használják. Ez lehetővé teszi a különböző kéréstípusok dinamikus kiválasztását és alkalmazását.
+![](https://raw.githubusercontent.com/vellt/Network_Helper_Library/master/ClassDiagram.png)
