@@ -83,7 +83,7 @@ Backend.DELETE(url).Send();
 ### `ToList` publikus függvénnyel
 > Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik.
 ```C#
-List<Student> idoutazok =  Backend.GET(url).Send().ToList<Student>();
+List<Student> students =  Backend.GET(url).Send().ToList<Student>();
 ```
 
 ### `Message` publikus tulajdonsággal
