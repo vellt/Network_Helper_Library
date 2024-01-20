@@ -9,8 +9,7 @@
 - A repo releases fülén található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
     - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/NetworkHelper.dll)
     - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/Newtonsoft.Json.dll)
-- Ezt követően a .Net-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lentt lévő gombok közül kattintson a "Browse..." felíratú gombra.
-Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban letöltött kettő dll-t.
+- Ezt követően a .NET-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lent lévő gombok közül kattintson a "Browse..." felíratú gombra. A fájlkezelő segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
 
 
