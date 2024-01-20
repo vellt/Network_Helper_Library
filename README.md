@@ -16,9 +16,13 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 
 <br><br>
 
-# Használata
+------------------
+# [MINTA BACKENDDÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js)
+---------------
 
-## [MINTA BACKENDDÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js)
+<br><br>
+
+# Használata
 
 ## A könyvtárban az alábbi `HTTP kérések` elérhetőek:
     | Metódus | Leírás                                     
