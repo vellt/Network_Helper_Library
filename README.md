@@ -18,6 +18,8 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 
 # Használata
 
+## [MINTA BACKENDDÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js)
+
 ## A könyvtárban az alábbi `HTTP kérések` elérhetőek:
     | Metódus | Leírás                                     
     |---------|-----------------------------------------------------------------------------------
