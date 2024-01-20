@@ -47,7 +47,7 @@ Backend.GET(url).Send();
 > A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/students";
-Student student = new Student { phone="12132", name="Sanyi", email="email"};
+Student student = new Student { phone="12132", name="Sanyi", email="email" };
 Backend.POST(url).Body(student).Send();
 ```
 
@@ -83,13 +83,13 @@ Backend.DELETE(url).Send();
 ### `ToList` publikus függvénnyel
 > Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik.
 ```C#
-List<Student> students =  Backend.GET(url).Send().ToList<Student>();
+List<Student> students = Backend.GET(url).Send().ToList<Student>();
 ```
 
 ### `Message` publikus tulajdonsággal
 > a backendtől visszakapott üzenetet tudjuk kinyerni, például kiírathatjuk, hogy `Sikeres Törlés!` vagy `Hiba!`
 ```C#
-Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12}).Send().Message);
+Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12 }).Send().Message);
 ```
 
 ### `StatusCode` publikus tulajdonsággal
