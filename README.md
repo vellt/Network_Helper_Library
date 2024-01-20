@@ -89,7 +89,7 @@ Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12}).Send().Messag
 ```
 
 ### `StatusCode` publikus tulajdonsággal
-> a backendtől visszakapott JSON-t tudjuk kinyerni
+> Visszakapjuk, hogy a kérés milyen státuszkóddal tért vissza. (OK==200, stb stb..)
 ```C#
 Response response = Backend.POST(url).Body(new Student { phone = "12132", name = "Sanyi", email = "email" }).Send();
 if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
