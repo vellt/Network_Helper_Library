@@ -12,7 +12,7 @@ namespace NetworkHelper
 {
     public class Response
     {
-        public Response(string message, bool error, StatusCode statusCode)
+        public Response(string message, StatusCode statusCode)
         {
             Message = message;
             StatusCode = statusCode;
@@ -71,25 +71,25 @@ namespace NetworkHelper
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     string json = streamReader.ReadToEnd();
-                    return new Response(message: json, error: false, statusCode: (StatusCode)((HttpWebResponse)response).StatusCode);
+                    return new Response(json, (StatusCode)((HttpWebResponse)response).StatusCode);
                 }
             }
             else
             {
-                return new Response(message: ((HttpWebResponse)response).StatusCode.ToString(), error: true, statusCode: (StatusCode)((HttpWebResponse)response).StatusCode);
+                return new Response(((HttpWebResponse)response).StatusCode.ToString(), (StatusCode)((HttpWebResponse)response).StatusCode);
             }
         }
     }
 
     public static class Backend
     {
-        public static RequestBuilder GET(string from) => new RequestBuilder(nameof(GET), from);
+        public static RequestBuilder GET(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder POST(string from) => new RequestBuilder(nameof(POST), from);
+        public static RequestBuilder POST(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder PUT(string from) => new RequestBuilder(nameof(PUT), from);
+        public static RequestBuilder PUT(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder DELETE(string from) => new RequestBuilder(nameof(DELETE), from);
+        public static RequestBuilder DELETE(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
     }
 }
 
