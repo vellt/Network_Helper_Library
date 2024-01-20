@@ -28,7 +28,6 @@ Ekkor betöltődik a fájlkezelő. Segítségével tallózza be a korábban let�
 
 
 <br><br>
--------------
 
 ## `GET` kérés kiépítse
 ```C#
