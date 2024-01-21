@@ -2,7 +2,7 @@
 
 - A NetworkHelper egy könyvtár, amely megkönnyíti a backend kommunikációt .NET Framework, C# projeketben.
 - Függősége: Newtonsoft.Json (13.0.3), amely a hálózati hívás során kapott JSON adatok, Objektumokká történő deserializálásáért felel.
-- Verzió: v0.0.2
+- Verzió: v0.0.3
 - Támogatottság: .NET Framework 4.7.2 vagy újjabb
 
 ## Első lépések
@@ -84,7 +84,7 @@ Response osztálybéli objektumot kapunk, ha bármely kérés (GET, POST, PUT, D
 > Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik.
 ```C#
 List<Student> students = Backend.GET(url).Send().ToList<Student>();
-students.ForEach(x => Console.WriteLine($"{x.id} {x.nev}"));
+students.ForEach(x => Console.WriteLine($"{x.id} {x.name}"));
 ```
 
 ------------
