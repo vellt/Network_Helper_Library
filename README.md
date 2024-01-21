@@ -121,6 +121,19 @@ if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
 
 <br><br>
 
+------------
+# Támogatja a fájlfeltöltést `PUT` és `POST` kéréssel egyaránt
+> egy opcionális második paraméterrel lambda kifejezéssel megadható, hogy az átadott objektum mely paramétere tartalmazza a kiválasztott fájl elérési útját
+```C#
+Student student = new Student { id=41, picture = @"C:\pictures\profile.png"};
+Console.WriteLine(Backend.PUT(url).Body(student, x => x.picture).Send().Message);
+```
+
+
+------------
+
+<br><br>
+
 # forráskód
 [https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
 
