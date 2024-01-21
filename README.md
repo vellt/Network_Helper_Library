@@ -42,8 +42,14 @@ Backend.GET(url).Send();
 
 -------------
 
+## A további kéréseknél szükséges lehet a `Body` láncolat hozzáadása
+ A body: `Osztály` típusú objektum fogadására alkalmas. Ez egy opcionális láncolat, mem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály tulajodonságait (property) karakterpontosan elnevezni az adatbázis mezőinek megfelelően.
+
+-------------
+
 ## `POST` kérés kiépítése
-> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+> Itt érdmes megadni a Body láncolatban a szükséges objektumot, amelyet létre akarunk hozni az adatbázisban a backend által
+
 ```C#
 string url = "http://localhost:3000/students";
 Student student = new Student { phone="12132", name="Sanyi", email="email" };
@@ -54,7 +60,7 @@ Backend.POST(url).Body(student).Send();
 
 ## `PUT` kérés kiépítése
 #### Body-val történő azonosítás
-> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+> Itt szükséges a Body láncolatban átadni azt az osztály objektumot, amely tartalmazza az entitás azonosítóját, továbbá annak a módosításra szánt tulajdonságát az új értékével együtt.
 ```C#
 string url = "http://localhost:3000/students";
 Student student = new Student { id = 11, name="Bela" };
@@ -72,7 +78,7 @@ Backend.PUT(url).Body(student).Send();
 
 ## `DELETE` kérés kiépítése
 #### Body-val történő azonosítás
-> A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
+> Itt szükséges a Body láncolatban átadni az osztály objektumot, amely tartalmazza a törölni kívánt entitás azonosítóját.
 ```C#
 string url = "http://localhost:3000/students";
 Backend.DELETE(url).Body(new Student { id = 11 }).Send();
