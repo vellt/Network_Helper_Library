@@ -95,7 +95,7 @@ Backend.DELETE(url).Send();
 ## Response-ból adatkinyerés
 Response osztálybéli objektumot kapunk, ha bármely kérés (GET, POST, PUT, DELETE) `Send()` függvénye meghívásra kerül. Általa pedig az alább tulajdonságokhoz, és függvényhez férünk hozzá:
 ### `ToList` publikus függvénnyel
-> Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik.
+> Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik. 200-astól eltérő értékű statuskód esetében üres listával tér vissza.
 ```C#
 List<Student> students = Backend.GET(url).Send().ToList<Student>();
 students.ForEach(x => Console.WriteLine($"{x.id} {x.name}"));
