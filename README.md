@@ -53,10 +53,18 @@ Backend.POST(url).Body(student).Send();
 -------------
 
 ## `PUT` kérés kiépítése
+#### Body-val történő azonosítás
 > A body tartalma: `Osztály` típusú objektum. Mely egy opcionális láncolat. Nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt a kulcsok a property (tulajonság) nevének megfelelően fognak elküldődni. Ezért érdemes az osztály property-ket karakterpontosan elnevezni.
 ```C#
 string url = "http://localhost:3000/students";
 Student student = new Student { id = 11, name="Bela" };
+Backend.PUT(url).Body(student).Send();
+```
+#### URL paraméteres azonosítás
+> Ebben az esetben már nincs szükségünk a body-ban id megadására, csak arra amit módosítani szeretnénk, hiszen az URL tartalmazza az azonosítóját a módosítani kívánt entiásnak.
+```C#
+string url = "http://localhost:3000/students/11";
+Student student = new Student { name="Bela" };
 Backend.PUT(url).Body(student).Send();
 ```
 
@@ -72,7 +80,7 @@ Backend.DELETE(url).Body(new Student { id = 11 }).Send();
 #### URL paraméteres azonosítás
 > Ebben az esetben már nincs szükségünk a body láncolatra, hiszen az URL tartalmazza az azonosítóját a törlésre szánt entiásnak.
 ```C#
-string url = "http://localhost:3000/students/1";
+string url = "http://localhost:3000/students/11";
 Backend.DELETE(url).Send();
 ```
 
