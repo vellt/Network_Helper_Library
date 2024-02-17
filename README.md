@@ -16,7 +16,7 @@
 <br><br>
 
 ------------------
-# [MINTA PROJEKTTÉRT KATTOLJ IDE](https://github.com/vellt/minta_projekt_networkhelper)
+# [‼️ MINTA PROJEKTTÉRT KATTOLJ IDE ‼️](https://github.com/vellt/minta_projekt_networkhelper)
 ---------------
 
 <br><br>
@@ -117,6 +117,19 @@ Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12 }).Send().Messa
 Student student = new Student { phone="12132", name="Sanyi", email="email" };
 Response response = Backend.POST(url).Body(student).Send();
 if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
+```
+
+<br><br>
+
+------------
+
+### ‼️ Új kiterjesztés `Modify`
+Lehetővé teszi, hogy a megszokott Linq kifejezéseket tovább bővítve lehetőségünk legyen nem csak szűrni, keresni, rákeresni elemekre. De egy-egy lehivatkozott objektumot tudjuk később módosítani is általa. Ezzel erősítve az egysoros kódolást lehetőségét a C#-ban.
+példa:
+
+```c#
+User user = Backend.GET(url).Send().ToList<User>().First().Modify(x => { x.birthday = DateTime.Now; x.lastname = "bela"; });
+User user = Backend.GET(url).Send().ToList<User>().First().Modify(x => x.birthday = DateTime.Now);
 ```
 
 <br><br>
