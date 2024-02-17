@@ -16,7 +16,7 @@
 <br><br>
 
 ------------------
-# [MINTA PROJEKTTÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js](https://github.com/vellt/minta_projekt_networkhelper)
+# [MINTA PROJEKTTÉRT KATTOLJ IDE](https://github.com/vellt/minta_projekt_networkhelper)
 ---------------
 
 <br><br>
