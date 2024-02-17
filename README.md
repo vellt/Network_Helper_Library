@@ -2,13 +2,13 @@
 
 - A NetworkHelper egy könyvtár, amely megkönnyíti a backend kommunikációt .NET Framework, C# projeketben.
 - Függősége: Newtonsoft.Json (13.0.3), amely a hálózati hívás során kapott JSON adatok, Objektumokká történő deserializálásáért felel.
-- Verzió: v0.0.3
+- Verzió: v0.0.5
 - Támogatottság: .NET Framework 4.7.2 vagy újjabb
 
 ## Első lépések
 - A repo releases fülén található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
-    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/NetworkHelper.dll)
-    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.3/Newtonsoft.Json.dll)
+    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.5/NetworkHelper.dll)
+    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.5/Newtonsoft.Json.dll)
 - Ezt követően a .NET-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lent lévő gombok közül kattintson a "Browse..." felíratú gombra. A fájlkezelő segítségével tallózza be a korábban letöltött kettő dll-t.
 - Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
 
@@ -16,7 +16,7 @@
 <br><br>
 
 ------------------
-# [MINTA BACKENDDÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js)
+# [MINTA PROJEKTTÉRT KATTOLJ IDE](https://github.com/vellt/Network_Helper_Library/blob/master/minta_backend.js](https://github.com/vellt/minta_projekt_networkhelper)
 ---------------
 
 <br><br>
@@ -122,17 +122,6 @@ if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
 <br><br>
 
 ------------
-# Támogatja a fájlfeltöltést `PUT` és `POST` kéréssel egyaránt
-> egy opcionális második paraméterrel lambda kifejezéssel megadható, hogy az átadott objektum mely paramétere tartalmazza a kiválasztott fájl elérési útját
-```C#
-Student student = new Student { id=41, picture = @"C:\pictures\profile.png"};
-Console.WriteLine(Backend.PUT(url).Body(student, x => x.picture).Send().Message);
-```
-
-
-------------
-
-<br><br>
 
 # forráskód
 [https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
