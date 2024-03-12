@@ -43,7 +43,7 @@ Backend.GET(url).Send();
 -------------
 
 ## A további kéréseknél szükséges lehet a `Body` láncolat hozzáadása
- A body: `Osztály` típusú objektum fogadására alkalmas. Ez egy opcionális láncolat, nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt fontos, hogy az osztály property (tulajdonság) az adatbázis táblájának a mezőneveivel eggyezzen meg. Ezért érdemes az osztály tulajodonságait (property) karakterpontosan elnevezni az adatbázis mezőinek megfelelően.
+ A body: `Osztály` típusú objektum fogadására alkalmas. Ez egy opcionális láncolat, nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt fontos, hogy az osztály property (tulajdonság) az adatbázis táblájának a mezőneveivel egyezzen meg. Ezért érdemes az osztály tulajodonságait (property) karakterpontosan elnevezni az adatbázis mezőinek megfelelően.
 
 -------------
 
