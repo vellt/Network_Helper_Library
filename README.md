@@ -119,10 +119,7 @@ Response response = Backend.DELETE(url).Send();
 Deszerializálja a kiválasztott JSON adatot a megadott típusra.
 
 ```csharp
-List<Student> students = Backend.GET(url)
-                                .Send()
-                                .ValueOf("students")
-                                .As<List<Student>>();
+List<Student> students = Backend.GET(url).Send().As<List<Student>>();
 ```
 
 ---
