@@ -114,8 +114,6 @@ Response response = Backend.DELETE(url).Send();
 
 ### Teljes Adatkinyerés a `Response`-ból
 
-###### `As<T>` Metódus
-
 Deszerializálja a kiválasztott JSON adatot a megadott típusra.
 
 **Server response:**
@@ -135,6 +133,8 @@ Deszerializálja a kiválasztott JSON adatot a megadott típusra.
         }
 ]
 ```
+
+**`As<T>` Metódus:**
 
 ```csharp
 List<Student> students = Backend.GET(url).Send().As<List<Student>>();
