@@ -112,13 +112,13 @@ Response response = Backend.DELETE(url).Send();
 
 ---
 
-### Teljes Adatkinyerés a `Response`-ból
+### `Teljes` adatkinyerés a `Response`-ból
 
 Deszerializálja a kiválasztott JSON adatot a megadott típusra.
 
 **Server response:**
 ```json
- [
+[
         {
             "id": 1,
             "nev": "Kiss Péter",
@@ -142,7 +142,7 @@ List<Student> students = Backend.GET(url).Send().As<List<Student>>();
 
 ---
 
-### Részleges Adatkinyerés a `Response`-ból
+### `Részleges` adatkinyerés a `Response`-ból
 
 Ezen metódusok segítik a komplex responseból való részleges adatfeldolgozást.
 
