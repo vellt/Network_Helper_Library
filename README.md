@@ -118,7 +118,7 @@ Response response = Backend.DELETE(url).Send();
 
 Deszerializálja a kiválasztott JSON adatot a megadott típusra.
 
-**Server response**
+**Server response:**
 ```json
  [
         {
