@@ -126,7 +126,7 @@ List<Student> students = Backend.GET(url).Send().As<List<Student>>();
 
 ### Részleges Adatkinyerés a `Response`-ból
 
-Ezen a metódusok segítik a komplex responseból való részleges adatfeldolgozást.
+Ezen metódusok segítik a komplex responseból való részleges adatfeldolgozást.
 
 **Komplex server response:**
 
