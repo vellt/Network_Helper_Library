@@ -114,8 +114,6 @@ Response response = Backend.DELETE(url).Send();
 
 ### Adatok Kinyerése a `Response`-ból
 
-A **Response** osztály példányosítása után az alábbi metódus segítségével nyerheted ki a JSON válasz adatokat:
-
 ###### `As<T>` Metódus
 
 Deszerializálja a kiválasztott JSON adatot a megadott típusra.
@@ -130,8 +128,6 @@ List<Student> students = Backend.GET(url)
 ---
 
 ### Részleges Adatkinyerés a `Response`-ból
-
-A **Response** osztály példányosítása után az alábbi metódusok segítségével nyerheted ki a JSON válasz részadatát:
 
 ###### `ValueAt` + `As<T>` Metódus
 
