@@ -126,56 +126,42 @@ List<Student> students = Backend.GET(url).Send().As<List<Student>>();
 
 ### Részleges Adatkinyerés a `Response`-ból
 
+Ezen a metódusok segítik a komplex responseból való részleges adatfeldolgozást.
+
+**Komplex server response:**
+
+```json
+{
+    "message": "Dolgozó sikeresen lekérve.",
+    "status": "success",
+    "data": {
+        "Az": 1,
+        "Nev": "Nagy József",
+        "Telepules": "Szolnok"
+    }
+}
+```
+
 ###### `ValueAt` + `As<T>` Metódus
 
-Kiválaszt egy JSON értéket az adott **index** alapján. Ez a metódus segíti a komplex responseból való részleges adatfeldolgozást.
-
-**Szerver válasz:**
-
-```json
-{
-    "message": "Dolgozó sikeresen lekérve.",
-    "status": "success",
-    "data": {
-        "Az": 1,
-        "Nev": "Nagy József",
-        "Telepules": "Szolnok"
-    }
-}
-```
-
-**Részleges adatkinyerés:**
+Kiválaszt egy JSON értéket az adott **index** alapján. 
 
 ```csharp
-Response response = Backend.GET(url).Send(); 
-Dolgozo dolgozo= response.ValueAt(2).As<Dolgozo>();
+Response response = Backend.GET(url).Send();
 string uzenet= response.ValueAt(0).As<string>();
+string status= response.ValueAt(1).As<string>();
+Dolgozo dolgozo= response.ValueAt(2).As<Dolgozo>();
 ```
 
-###### `ValueOf` Metódus (OPCIONÁLIS)
+###### `ValueOf` + `As<T>` Metódus
 
-Kiválaszt egy JSON értéket a megadott **név** alapján. Ez a metódus segíti a komplex responseból való részleges adatfeldolgozást.
-
-**Szerver válasz:**
-
-```json
-{
-    "message": "Dolgozó sikeresen lekérve.",
-    "status": "success",
-    "data": {
-        "Az": 1,
-        "Nev": "Nagy József",
-        "Telepules": "Szolnok"
-    }
-}
-```
-
-**Részleges adatkinyerés:**
+Kiválaszt egy JSON értéket a megadott **név** alapján.
 
 ```csharp
-Response response = Backend.GET(url).Send(); 
-Dolgozo dolgozo= response.ValueOf("data").As<Dolgozo>();
+Response response = Backend.GET(url).Send();
 string uzenet= response.ValueOf("message").As<string>();
+string status= response.ValueOf("status").As<string>();
+Dolgozo dolgozo= response.ValueOf("data").As<Dolgozo>();
 ```
 
 ---
