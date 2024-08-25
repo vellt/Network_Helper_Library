@@ -112,7 +112,7 @@ Response response = Backend.DELETE(url).Send();
 
 ---
 
-### Adatok Kinyerése a `Response`-ból
+### Teljes Adatkinyerés a `Response`-ból
 
 ###### `As<T>` Metódus
 
