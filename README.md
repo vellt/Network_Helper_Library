@@ -188,6 +188,8 @@ A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Netwo
 
 ### Könyvtár szerkezete
 
+<img width="500" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/297de578-e70c-4f6c-b864-7d15f1932141">
+
 ---
 
 Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egyszerű és érthető legyen. Ha bármilyen kérdésed van, vagy további segítségre van szükséged, ne habozz kapcsolatba lépni a könyvtár fejlesztőivel vagy a közösséggel a [GitHub Issues](https://github.com/vellt/Network_helper_Library/issues) oldalon.
