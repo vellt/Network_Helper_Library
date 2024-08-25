@@ -45,7 +45,7 @@ Response response = Backend.GET(url).Send();
 
 ### `POST` Kérés Kiépítése
 
-A `POST` kéréshez meg kell adni a JSON body-t, amely az új objektumot tartalmazza, amit létre szeretnél hozni.  Body felhasználása opcionális. Amennyiben nem szeretnél a body-ban adatot utaztatni, nem kötelező meghívni.
+Body felhasználása opcionális. Amennyiben nem szeretnél a body-ban adatot utaztatni, nem kötelező meghívni.
 
 ```csharp
 string url = "http://localhost:3000/students"; 
@@ -64,7 +64,7 @@ Response response = Backend.POST(url).Body(student).Send();
 
 ###### Body-val történő Azonosítás
 
-Az objektum tartalmazza az entitás azonosítóját és a módosítani kívánt tulajdonságot az új értékkel együtt. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
+A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
 ```csharp
 string url = "http://localhost:3000/students"; 
@@ -78,7 +78,7 @@ Response response = Backend.PUT(url).Body(student).Send();
 
 ###### URL Paraméteres Azonosítás
 
-Az azonosítót az URL tartalmazza, nem szükséges a body-ban megadni. Body felhasználása opcionális. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
+A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
 ```csharp
 string url = "http://localhost:3000/students/11"; 
@@ -92,7 +92,7 @@ Response response = Backend.PUT(url).Body(student).Send();
 
 ###### Body-val történő Azonosítás
 
-Az objektum tartalmazza a törölni kívánt entitás azonosítóját. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
+A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
 ```csharp
 string url = "http://localhost:3000/students"; 
