@@ -49,11 +49,13 @@
   <ItemGroup>
     <Compile Include="Backend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusCode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)ILMerge.exe /out:NetworkHelper.dll $(OutputPath)NetworkHelper.dll $(OutputPath)Newtonsoft.Json.dll" />
+  </Target>
 </Project>

@@ -16,3 +16,12 @@ C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CoreCompileInputs.
 C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.csproj.CopyComplete
 C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.dll
 C:\NetworkHelper\NetworkHelper\obj\Debug\NetworkHelper.pdb
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\bin\Debug\NetworkHelper.dll
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\bin\Debug\NetworkHelper.pdb
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\bin\Debug\Newtonsoft.Json.dll
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\bin\Debug\Newtonsoft.Json.xml
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\obj\Debug\NetworkHelper.csproj.AssemblyReference.cache
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\obj\Debug\NetworkHelper.csproj.CoreCompileInputs.cache
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\obj\Debug\NetworkHelper.csproj.CopyComplete
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\obj\Debug\NetworkHelper.dll
+C:\Users\szant\Desktop\konyvtar\Network_Helper_Library\NetworkHelper\obj\Debug\NetworkHelper.pdb

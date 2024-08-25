@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,40 +13,156 @@ using System.Threading.Tasks;
 
 namespace NetworkHelper
 {
-    public static class Extensions
-    {
-        public static T Modify<T>(this T obj, Action<T> action)
-        {
-            action(obj);
-            return obj;
-        }
-    }
     public class Response
     {
-        public Response(string message, StatusCode statusCode)
+        /// <summary>
+        /// Inicializálja a <see cref="Response"/> osztály új példányát a megadott JSON adat alapján.
+        /// </summary>
+        /// <param name="jsonData">A válasz JSON formátumú adata.</param>
+        private Response(string jsonData)
         {
-            Message = message;
-            StatusCode = statusCode;
+            JsonData = jsonData;
+            SelectedData = jsonData;
         }
-        public StatusCode StatusCode { get; }
-        public string Message { get; }
-        public List<T> ToList<T>()
+
+        internal static Response Create(string jsonData)
         {
-            if (StatusCode != StatusCode.OK) return new List<T>(); // hiba esetén üres listával tér vissza
-            else return JsonConvert.DeserializeObject<List<T>>(Message);
+            return new Response(jsonData);
+        }
+
+        /// <summary>
+        /// A válasz teljes JSON adata.
+        /// </summary>
+        private string JsonData { get; }
+        // <summary>
+        /// Az éppen kiválasztott JSON (részleges) adat, amely az aktuális feldolgozás eredménye.
+        /// </summary>
+        private string SelectedData { get; set; }
+
+        /// <summary>
+        /// Kiválasztja a JSON adatban található értéket az adott index alapján.
+        /// </summary>
+        /// <param name="index">Az index, amely alapján az értéket ki szeretnénk választani.</param>
+        /// <returns>A <see cref="Response"/> példány, amely lehetővé teszi a további feldolgozást.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Ha az index érvénytelen.</exception>
+        /// <exception cref="InvalidOperationException">Ha a JSON adat nem olvasható.</exception>
+        public Response ValueAt(int index)
+        {
+            try
+            {
+                JObject response = JObject.Parse(JsonData);
+                var keys = response.Properties().Select(p => p.Name).ToList();
+
+                if (index < 0 || index >= keys.Count)
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+
+                string key = keys[index];
+                SelectedData = response[key]?.ToString();
+            }
+            catch (JsonException ex)
+            {
+                throw new InvalidOperationException("Failed to parse JSON data.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new InvalidOperationException("Invalid index provided.", ex);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Kiválasztja a JSON adatban található értéket a megadott név alapján.
+        /// </summary>
+        /// <param name="name">A név, amely alapján az értéket ki szeretnénk választani.</param>
+        /// <returns>A <see cref="Response"/> példány, amely lehetővé teszi a további feldolgozást.</returns>
+        /// <exception cref="InvalidOperationException">Ha a JSON adat nem olvasható.</exception>
+        public Response ValueOf(string name)
+        {
+            try
+            {
+                JObject response = JObject.Parse(JsonData);
+                SelectedData = response[name]?.ToString();
+            }
+            catch (JsonException ex)
+            {
+                throw new InvalidOperationException("Failed to parse JSON data.", ex);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// A kiválasztott JSON adatot deszerializálja a megadott típusra.
+        /// </summary>
+        /// <typeparam name="T">A típus, amire az adatot deszerializálni szeretnénk.</typeparam>
+        /// <returns>A deszerializált objektum.</returns>
+        /// <exception cref="InvalidOperationException">Ha a deszerializálás során hiba történik.</exception>
+        public T As<T>()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(SelectedData))
+                {
+                    throw new InvalidOperationException("SelectedData is null or empty.");
+                }
+
+                if (typeof(T) == typeof(string))
+                {
+                    return (T)(object)SelectedData;
+                }
+                else
+                {
+                    var result = JsonConvert.DeserializeObject<T>(SelectedData);
+                    if (result == null)
+                    {
+                        throw new InvalidOperationException("Deserialization resulted in a null value.");
+                    }
+                    return result;
+                }
+            }
+            catch (JsonException ex)
+            {
+                throw new InvalidOperationException("Failed to deserialize JSON data.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("An error occurred during deserialization.", ex);
+            }
         }
     }
 
+    /// <summary>
+    /// HTTP kérések építéséhez és küldéséhez használt osztály.
+    /// </summary>
     public class RequestBuilder
     {
-        WebRequest request;
-        public RequestBuilder(string method, string from)
+        private WebRequest request;
+
+        // Privát konstruktor, hogy külső példányosítás ne legyen lehetséges
+        private RequestBuilder(string method, string url)
         {
-            var request = WebRequest.Create(from);
+            request = WebRequest.Create(url);
             request.Method = method;
-            this.request = request;
         }
 
+        /// <summary>
+        /// Létrehozza a <see cref="RequestBuilder"/> új példányát a megadott HTTP metódussal és URL-lel.
+        /// </summary>
+        /// <param name="method">Az HTTP metódus (pl. GET, POST).</param>
+        /// <param name="url">A kérés URL-je.</param>
+        /// <returns>A létrehozott <see cref="RequestBuilder"/> példány.</returns>
+        internal static RequestBuilder Create(string method, string url)
+        {
+            return new RequestBuilder(method, url);
+        }
+
+        /// <summary>
+        /// Beállítja a kérés body-ját JSON formátumra.
+        /// </summary>
+        /// <typeparam name="T">A body típusa, amely JSON formába lesz alakítva.</typeparam>
+        /// <param name="body">A JSON-re alakítandó body.</param>
+        /// <returns>A jelenlegi <see cref="RequestBuilder"/> példány, lehetővé téve a további láncolást.</returns>
         public RequestBuilder Body<T>(T body)
         {
             request.ContentType = "application/json";
@@ -56,34 +173,91 @@ namespace NetworkHelper
             return this;
         }
 
+        /// <summary>
+        /// Szinkron módon elküldi a kérést és visszaadja a választ.
+        /// </summary>
+        /// <returns>A választ tartalmazó <see cref="Response"/> objektum.</returns>
+        /// <exception cref="InvalidOperationException">Ha a válasz nem nyerhető ki.</exception>
         public Response Send()
         {
-            var response = request.GetResponse();
-            if (response != null && ((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+            try
             {
+                var response = request.GetResponse();
+                if (response != null)
+                {
+                    using (var streamReader = new StreamReader(response.GetResponseStream()))
+                    {
+                        string json = streamReader.ReadToEnd();
+                        response.Close();
+                        return Response.Create(jsonData: json);
+                    }
+                }
+                throw new Exception("Response is null.");
+            }
+            catch (WebException ex)
+            {
+                throw new InvalidOperationException("Failed to get response from server.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Aszinkron módon elküldi a kérést és visszaadja a választ.
+        /// </summary>
+        /// <returns>A választ tartalmazó <see cref="Response"/> objektum.</returns>
+        /// <exception cref="InvalidOperationException">Ha a válasz nem nyerhető ki.</exception>
+        public async Task<Response> SendAsync()
+        {
+            try
+            {
+                // Átkonvertáljuk a WebRequest-t HttpWebRequest-re aszinkron műveletekhez
+                var httpRequest = (HttpWebRequest)request;
+
+                using (var response = await httpRequest.GetResponseAsync())
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
-                    string json = streamReader.ReadToEnd();
-                    response.Close();
-                    return new Response(message: json, statusCode: (StatusCode)((HttpWebResponse)response).StatusCode);
+                    string json = await streamReader.ReadToEndAsync();
+                    return Response.Create(jsonData: json);
                 }
             }
-            else
+            catch (WebException ex)
             {
-                return new Response(message: ((HttpWebResponse)response).StatusCode.ToString(), statusCode: (StatusCode)((HttpWebResponse)response).StatusCode);
+                throw new InvalidOperationException("Failed to get response from server.", ex);
             }
         }
     }
 
+    /// <summary>
+    /// Statikus osztály, amely segít HTTP kérést készíteni különböző HTTP metódusokhoz.
+    /// </summary>
     public static class Backend
     {
-        public static RequestBuilder GET(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
+        /// <summary>
+        /// Létrehozza a GET kéréshez használható <see cref="RequestBuilder"/> példányt.
+        /// </summary>
+        /// <param name="url">Az URL a kéréshez.</param>
+        /// <returns>A GET kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
+        public static RequestBuilder GET(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder POST(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
+        /// <summary>
+        /// Létrehozza a POST kéréshez használható <see cref="RequestBuilder"/> példányt.
+        /// </summary>
+        /// <param name="url">Az URL a kéréshez.</param>
+        /// <returns>A POST kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
+        public static RequestBuilder POST(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder PUT(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
+        /// <summary>
+        /// Létrehozza a PUT kéréshez használható <see cref="RequestBuilder"/> példányt.
+        /// </summary>
+        /// <param name="url">Az URL a kéréshez.</param>
+        /// <returns>A PUT kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
+        public static RequestBuilder PUT(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
 
-        public static RequestBuilder DELETE(string from) => new RequestBuilder(MethodBase.GetCurrentMethod().Name, from);
+        /// <summary>
+        /// Létrehozza a DELETE kéréshez használható <see cref="RequestBuilder"/> példányt.
+        /// </summary>
+        /// <param name="url">Az URL a kéréshez.</param>
+        /// <returns>A DELETE kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
+        public static RequestBuilder DELETE(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
     }
 }
 
