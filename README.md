@@ -1,144 +1,200 @@
 # NetworkHelper.dll
 
-- A NetworkHelper egy könyvtár, amely megkönnyíti a backend kommunikációt .NET Framework, C# projeketben.
-- Függősége: Newtonsoft.Json (13.0.3), amely a hálózati hívás során kapott JSON adatok, Objektumokká történő deserializálásáért felel.
-- Verzió: v0.0.5
-- Támogatottság: .NET Framework 4.7.2 vagy újjabb
+- **A NetworkHelper** egy .NET Framework és C# projektekhez készült könyvtár, amely megkönnyíti a backend kommunikációt. A könyvtár egyszerűsíti az HTTP kérések küldését és a JSON válaszok feldolgozását.
+- **Verzió**: v0.1.0
+- **Támogatott .NET Verziók**: .NET Framework 4.7.2 vagy újabb
 
-## Első lépések
-- A repo releases fülén található kettő dll-t (könyvtárat) töltse le. Amennyiben nem találja az alábbi linkeken közvetlenül is megteheti:
-    - [NetworkHelper.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.5/NetworkHelper.dll)
-    - [Newtonsoft.Json.dll](https://github.com/vellt/Network_Helper_Library/releases/download/v0.0.5/Newtonsoft.Json.dll)
-- Ezt követően a .NET-es projekt (Visual Studio) solution explorerjében lévő "References"-re jobb klikk, majd "Add Refenence", ekkor betöltődik egy ablak, ahol bal lent lévő gombok közül kattintson a "Browse..." felíratú gombra. A fájlkezelő segítségével tallózza be a korábban letöltött kettő dll-t.
-- Ha lenyitja a solution explorerben lévő "References" fület, láthatja, hogy hozzáadásra került a kettő könyvtár (dll)
+### Első lépések
 
+- **Könyvtár (DLL) letöltése**:
+  
+  - Töltsd le a `NetworkHelper.dll` fájlt a [GitHub Releases](https://github.com/vellt/Network_helper_Library/releases) oldalról.
 
-<br><br>
+- **DLL hozzáadása a projektedhez**:
+  
+  - Nyisd meg a Visual Studio-t és navigálj a **Solution Explorer** ablakhoz.
+  - Jobb klikk a **References** elemre, válaszd az **Add Reference** lehetőséget.
+  - A megjelenő ablakban kattints a **Browse...** gombra, és tallózd be a letöltött DLL fájlt.
+  - Ellenőrizd, hogy a DLL megjelent a **References** alatt.
 
-------------------
-# [‼️ MINTA PROJEKTÉRT KATTOLJ IDE ‼️](https://github.com/vellt/minta_projekt_networkhelper)
----------------
+---
 
-<br><br>
+# [‼️ Minta Projektért Kattints Ide ‼️](https://github.com/vellt/minta_projekt_networkhelper)
 
-# Backend statikus osztály használata
+---
 
-## A könyvtárban az alábbi `HTTP kérések` elérhetőek:
-    | Metódus | Leírás                                     
-    |---------|-----------------------------------------------------------------------------------
-    | GET     | adat olvasás (fetch)                       
-    | POST    | adat létrehozás                            
-    | PUT     | adat módosítás                             
-    | DELETE  | adat törlés                    
+### Backend Statikus Osztály Használata
 
+A **Backend** statikus osztály segítségével könnyedén létrehozhatsz és küldhetsz HTTP kéréseket.
 
-<br><br>
+### Elérhető HTTP Metódusok
 
-## `GET` kérés kiépítse
-```C#
-string url = "http://localhost:3000/students";
-Backend.GET(url).Send();
+| Metódus  | Leírás                | Példa Használat                       |
+| -------- | --------------------- | ------------------------------------- |
+| `GET`    | Adatok lekérése       | `Backend.GET(url).Send()`             |
+| `POST`   | Új adatok létrehozása | `Backend.POST(url).Body(body).Send()` |
+| `PUT`    | Adatok módosítása     | `Backend.PUT(url).Body(body).Send()`  |
+| `DELETE` | Adatok törlése        | `Backend.DELETE(url).Send()`          |
+
+### `GET` Kérés Kiépítése
+
+```csharp
+string url = "http://localhost:3000/students"; 
+Response response = Backend.GET(url).Send();
 ```
 
--------------
+---
 
-## A további kéréseknél szükséges lehet a `Body` láncolat hozzáadása
- A body: `Osztály` típusú objektum fogadására alkalmas. Ez egy opcionális láncolat, nem kötelező eleme a kérés elküldésének. Az osztálynak egy-egy adatbázisbéli táblát kell reprezentálnia. Itt fontos, hogy az osztály property (tulajdonság) az adatbázis táblájának a mezőneveivel egyezzen meg. Ezért érdemes az osztály tulajodonságait (property) karakterpontosan elnevezni az adatbázis mezőinek megfelelően.
+### `POST` Kérés Kiépítése
 
--------------
+A `POST` kéréshez meg kell adni a JSON body-t, amely az új objektumot tartalmazza, amit létre szeretnél hozni.  Body felhasználása opcionális. Amennyiben nem szeretnél a body-ban adatot utaztatni, nem kötelező meghívni.
 
-## `POST` kérés kiépítése
-> Itt érdmes megadni a Body láncolatban a szükséges objektumot, amelyet létre akarunk hozni az adatbázisban a backend által
-
-```C#
-string url = "http://localhost:3000/students";
-Student student = new Student { phone="12132", name="Sanyi", email="email" };
-Backend.POST(url).Body(student).Send();
-```
-
--------------
-
-## `PUT` kérés kiépítése
-#### Body-val történő azonosítás
-> Itt szükséges a Body láncolatban átadni azt az osztály objektumot, amely tartalmazza az entitás azonosítóját, továbbá annak a módosításra szánt tulajdonságát az új értékével együtt.
-```C#
-string url = "http://localhost:3000/students";
-Student student = new Student { id = 11, name="Bela" };
-Backend.PUT(url).Body(student).Send();
-```
-#### URL paraméteres azonosítás
-> Ebben az esetben már nincs szükségünk a body-ban id megadására, csak arra amit módosítani szeretnénk, hiszen az URL tartalmazza az azonosítóját a módosítani kívánt entiásnak.
-```C#
-string url = "http://localhost:3000/students/11";
-Student student = new Student { name="Bela" };
-Backend.PUT(url).Body(student).Send();
-```
-
--------------
-
-## `DELETE` kérés kiépítése
-#### Body-val történő azonosítás
-> Itt szükséges a Body láncolatban átadni az osztály objektumot, amely tartalmazza a törölni kívánt entitás azonosítóját.
-```C#
-string url = "http://localhost:3000/students";
-Backend.DELETE(url).Body(new Student { id = 11 }).Send();
-```
-#### URL paraméteres azonosítás
-> Ebben az esetben már nincs szükségünk a body láncolatra, hiszen az URL tartalmazza az azonosítóját a törlésre szánt entiásnak.
-```C#
-string url = "http://localhost:3000/students/11";
-Backend.DELETE(url).Send();
-```
-
-<br><br>
-
-## Response-ból adatkinyerés
-Response osztálybéli objektumot kapunk, ha bármely kérés (GET, POST, PUT, DELETE) `Send()` függvénye meghívásra kerül. Általa pedig az alább tulajdonságokhoz, és függvényhez férünk hozzá:
-### `ToList` publikus függvénnyel
-> Visszatérési értéke listbába rendezett Osztály objektumok, melyek a fetch-elt adatokból képződnek. A generitikusan megadott Osztály típus tulajonság neveinek karakterpontosnak kell lenniük az adatbázis mezőivel, mivel háttérben Json deserializálás történik. 200-astól eltérő értékű statuskód esetében üres listával tér vissza.
-```C#
-List<Student> students = Backend.GET(url).Send().ToList<Student>();
-students.ForEach(x => Console.WriteLine($"{x.id} {x.name}"));
-```
-
-------------
-
-### `Message` publikus tulajdonsággal
-> a backendtől visszakapott üzenetet tudjuk kinyerni, például kiírathatjuk, hogy `Sikeres Törlés!` vagy `Hiba!`
-```C#
-Console.WriteLine(Backend.DELETE(url).Body(new Student { id = 12 }).Send().Message);
-```
-
-------------
-
-### `StatusCode` publikus tulajdonsággal
-> Visszakapjuk, hogy a kérés milyen státuszkóddal tért vissza. (OK==200, stb stb..)
-```C#
-Student student = new Student { phone="12132", name="Sanyi", email="email" };
+```csharp
+string url = "http://localhost:3000/students"; 
+Student student = new Student 
+{ 
+    phone = "12132", 
+    name = "Sanyi", 
+    email = "email" 
+}; 
 Response response = Backend.POST(url).Body(student).Send();
-if(response.StatusCode == StatusCode.OK) Console.WriteLine(response.Message);
 ```
 
-<br><br>
+---
 
-------------
+### `PUT` Kérés Kiépítése
 
-### ‼️ Új kiterjesztés `Modify`
-Lehetővé teszi, hogy a megszokott Linq kifejezéseket tovább bővítve lehetőségünk legyen nem csak szűrni, keresni, rákeresni elemekre. De egy-egy lehivatkozott objektumot tudjuk később módosítani is általa. Ezzel erősítve az egysoros kódolást lehetőségét a C#-ban.
-példa:
+###### Body-val történő Azonosítás
 
-```c#
-User user = Backend.GET(url).Send().ToList<User>().First().Modify(x => { x.birthday = DateTime.Now; x.lastname = "bela"; });
-User user = Backend.GET(url).Send().ToList<User>().First().Modify(x => x.birthday = DateTime.Now);
+Az objektum tartalmazza az entitás azonosítóját és a módosítani kívánt tulajdonságot az új értékkel együtt. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
+
+```csharp
+string url = "http://localhost:3000/students"; 
+Student student = new Student 
+{ 
+    id = 11, 
+    name = "Bela" 
+}; 
+Response response = Backend.PUT(url).Body(student).Send();
 ```
 
-<br><br>
+###### URL Paraméteres Azonosítás
 
-------------
+Az azonosítót az URL tartalmazza, nem szükséges a body-ban megadni. Body felhasználása opcionális. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
-# forráskód
-[https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
+```csharp
+string url = "http://localhost:3000/students/11"; 
+Student student = new Student { name = "Bela" }; 
+Response response = Backend.PUT(url).Body(student).Send();
+```
+
+---
+
+### `DELETE` Kérés Kiépítése
+
+###### Body-val történő Azonosítás
+
+Az objektum tartalmazza a törölni kívánt entitás azonosítóját. A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
+
+```csharp
+string url = "http://localhost:3000/students"; 
+Response response = Backend.DELETE(url)
+                           .Body(new Student { id = 11 })
+                           .Send();
+```
+
+###### URL Paraméteres Azonosítás
+
+Az azonosítót az URL tartalmazza, nem szükséges a body láncolat.
+
+```csharp
+string url = "http://localhost:3000/students/11"; 
+Response response = Backend.DELETE(url).Send();
+```
+
+---
+
+### Adatok Kinyerése a `Response`-ból
+
+A **Response** osztály példányosítása után az alábbi metódus segítségével nyerheted ki a JSON válasz adatokat:
+
+###### `As<T>` Metódus
+
+Deszerializálja a kiválasztott JSON adatot a megadott típusra.
+
+```csharp
+List<Student> students = Backend.GET(url)
+                                .Send()
+                                .ValueOf("students")
+                                .As<List<Student>>();
+```
+
+---
+
+### Részleges Adatkinyerés a `Response`-ból
+
+A **Response** osztály példányosítása után az alábbi metódusok segítségével nyerheted ki a JSON válasz részadatát:
+
+###### `ValueAt` + `As<T>` Metódus
+
+Kiválaszt egy JSON értéket az adott **index** alapján. Ez a metódus segíti a komplex responseból való részleges adatfeldolgozást.
+
+**Szerver válasz:**
+
+```json
+{
+    "message": "Dolgozó sikeresen lekérve.",
+    "status": "success",
+    "data": {
+        "Az": 1,
+        "Nev": "Nagy József",
+        "Telepules": "Szolnok"
+    }
+}
+```
+
+**Részleges adatkinyerés:**
+
+```csharp
+Response response = Backend.GET(url).Send(); 
+Dolgozo dolgozo= response.ValueAt(2).As<Dolgozo>();
+string uzenet= response.ValueAt(0).As<string>();
+```
+
+###### `ValueOf` Metódus (OPCIONÁLIS)
+
+Kiválaszt egy JSON értéket a megadott **név** alapján. Ez a metódus segíti a komplex responseból való részleges adatfeldolgozást.
+
+**Szerver válasz:**
+
+```json
+{
+    "message": "Dolgozó sikeresen lekérve.",
+    "status": "success",
+    "data": {
+        "Az": 1,
+        "Nev": "Nagy József",
+        "Telepules": "Szolnok"
+    }
+}
+```
+
+**Részleges adatkinyerés:**
+
+```csharp
+Response response = Backend.GET(url).Send(); 
+Dolgozo dolgozo= response.ValueOf("data").As<Dolgozo>();
+string uzenet= response.ValueOf("message").As<string>();
+```
+
+---
+
+### Forráskód
+
+A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
 
 
-# A könyvtár Szerkezete
-![](https://raw.githubusercontent.com/vellt/Network_Helper_Library/master/ClassDiagram.png)
+
+### Könyvtár szerkezete
+
+Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egyszerű és érthető legyen. Ha bármilyen kérdésed van, vagy további segítségre van szükséged, ne habozz kapcsolatba lépni a könyvtár fejlesztőivel vagy a közösséggel a [GitHub Issues](https://github.com/vellt/Network_helper_Library/issues) oldalon.
