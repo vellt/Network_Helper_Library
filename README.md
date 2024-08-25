@@ -32,6 +32,8 @@ A **Backend** statikus osztály segítségével könnyedén létrehozhatsz és k
 | `PUT`    | Adatok módosítása     | `Backend.PUT(url).Body(body).Send()`  |
 | `DELETE` | Adatok törlése        | `Backend.DELETE(url).Send()`          |
 
+---
+
 ### `GET` Kérés Kiépítése
 
 ```csharp
