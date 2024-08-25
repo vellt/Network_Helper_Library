@@ -19,10 +19,6 @@
 
 ---
 
-# [‼️ Minta Projektért Kattints Ide ‼️](https://github.com/vellt/minta_projekt_networkhelper)
-
----
-
 ### Backend Statikus Osztály Használata
 
 A **Backend** statikus osztály segítségével könnyedén létrehozhatsz és küldhetsz HTTP kéréseket.
@@ -193,8 +189,15 @@ string uzenet= response.ValueOf("message").As<string>();
 
 A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
 
-
+---
 
 ### Könyvtár szerkezete
 
+---
+
 Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egyszerű és érthető legyen. Ha bármilyen kérdésed van, vagy további segítségre van szükséged, ne habozz kapcsolatba lépni a könyvtár fejlesztőivel vagy a közösséggel a [GitHub Issues](https://github.com/vellt/Network_helper_Library/issues) oldalon.
+
+---
+
+# [‼️ Minta Projektért Kattints Ide ‼️](https://github.com/vellt/minta_projekt_networkhelper)
+
