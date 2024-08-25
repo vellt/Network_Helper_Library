@@ -142,9 +142,7 @@ Ezen a metódusok segítik a komplex responseból való részleges adatfeldolgoz
 }
 ```
 
-###### `ValueAt` + `As<T>` Metódus
-
-Kiválaszt egy JSON értéket az adott **index** alapján. 
+**`ValueAt` + `As<T>` Metódus:** A `ValueAt` kiválaszt egy JSON értéket az adott **index** alapján. 
 
 ```csharp
 Response response = Backend.GET(url).Send();
@@ -153,9 +151,7 @@ string status= response.ValueAt(1).As<string>();
 Dolgozo dolgozo= response.ValueAt(2).As<Dolgozo>();
 ```
 
-###### `ValueOf` + `As<T>` Metódus
-
-Kiválaszt egy JSON értéket a megadott **név** alapján.
+**`ValueOf` + `As<T>` Metódus:** A `ValueOf` kiválaszt egy JSON értéket a megadott **név** alapján.
 
 ```csharp
 Response response = Backend.GET(url).Send();
