@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -50,7 +51,7 @@ namespace NetworkHelper
         {
             try
             {
-                JObject response = JObject.Parse(JsonData);
+                JObject response = JObject.Parse(SelectedData);
                 var keys = response.Properties().Select(p => p.Name).ToList();
 
                 if (index < 0 || index >= keys.Count)
@@ -81,7 +82,7 @@ namespace NetworkHelper
         {
             try
             {
-                JObject response = JObject.Parse(JsonData);
+                JObject response = JObject.Parse(SelectedData);
                 SelectedData = response[name]?.ToString();
             }
             catch (JsonException ex)
@@ -110,6 +111,44 @@ namespace NetworkHelper
                 if (typeof(T) == typeof(string))
                 {
                     return (T)(object)SelectedData;
+                }
+                else if (typeof(T) == typeof(DateTime))
+                {
+                    // Lehetséges dátumformátumok
+                    var dateFormats = new[]
+                    {
+                        "yyyy. MM. dd. H:mm:ss",         // Pl. "2007. 05. 12. 0:00:00"
+                        "yyyy-MM-dd",                    // Pl. "2007-05-12"
+                        "yyyy-MM-ddTHH:mm:ssZ",          // Pl. "2007-05-12T00:00:00Z"
+                        "yyyy-MM-dd HH:mm:ss",           // Pl. "2007-05-12 00:00:00"
+                        "dd/MM/yyyy",                    // Pl. "12/05/2007"
+                        "MM/dd/yyyy",                    // Pl. "05/12/2007"
+                        "MM/dd/yyyy HH:mm:ss",           // Pl. "05/12/2007 00:00:00"
+                        "dd-MM-yyyy",                    // Pl. "12-05-2007"
+                        "yyyy/MM/dd",                    // Pl. "2007/05/12"
+                        "yyyy.MM.dd",                    // Pl. "2007.05.12"
+                        "yyyy-MM-ddTHH:mm:ss",           // Pl. "2007-05-12T00:00:00"
+                        "yyyy-MM-ddTHH:mm:ss.fffZ",      // Pl. "2007-05-12T00:00:00.000Z"
+                        "M/d/yyyy",                      // Pl. "5/12/2007"
+                        "M/d/yyyy HH:mm:ss",             // Pl. "5/12/2007 00:00:00"
+                        "d/M/yyyy",                      // Pl. "12/5/2007"
+                        "d/M/yyyy HH:mm:ss",             // Pl. "12/5/2007 00:00:00"
+                        "yyyyMMddTHHmmss",               // Pl. "20070512T000000"
+                        "yyyyMMddTHHmmssZ",              // Pl. "20070512T000000Z"
+                        "yyyyMMdd",                      // Pl. "20070512"
+                        "MM/dd/yyyy hh:mm:ss tt",        // Pl. "05/12/2007 12:00:00 PM"
+                        "dd/MM/yyyy hh:mm:ss tt",        // Pl. "12/05/2007 12:00:00 PM"
+                        "yyyy-MM-ddTHH:mm:ss.fff"        // Pl. "2007-05-12T00:00:00.000"
+                    };
+
+                    if (DateTime.TryParseExact(SelectedData, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                    {
+                        return (T)(object)parsedDate;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Failed to parse DateTime from the provided string.");
+                    }
                 }
                 else
                 {
