@@ -180,6 +180,44 @@ Dolgozo dolgozo= response.ValueOf("data").As<Dolgozo>();
 
 ---
 
+### `ValueOf` és `ValueOf` egymásba ágyazása
+
+Ezen metódusok egymásba ágyazása segíti a komplex responseból a mélyebb szintű részleges adatfeldolgozást.
+
+**Komplex server response:**
+
+```json
+{
+    "message": "Dolgozó sikeresen lekérve.",
+    "status": "success",
+    "data": {
+        "Az": 1,
+        "Nev": "Nagy József",
+        "Telepules": "Szolnok"
+    }
+}
+```
+
+**Név kinyerése a `ValueAt`-al** 
+
+```csharp
+string nev = Backend.GET(link).Send()
+                .ValueAt(2)
+                .ValueAt(1)
+                .As<string>();
+```
+
+**Név kinyerése a `ValueOf`-al** 
+
+```csharp
+string nev = Backend.GET(link).Send()
+                .ValueOf("data")
+                .ValueOf("Nev")
+                .As<string>();
+```
+
+---
+
 ### Forráskód
 
 A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
