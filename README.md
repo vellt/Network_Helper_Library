@@ -198,7 +198,7 @@ Ezen metódusok egymásba ágyazása segíti a komplex responseból a mélyebb s
 }
 ```
 
-**Név kinyerése a `ValueAt`-al** 
+**A `Név` érték kinyerése a `ValueAt`-al** 
 
 ```csharp
 string nev = Backend.GET(link).Send()
@@ -207,7 +207,7 @@ string nev = Backend.GET(link).Send()
                 .As<string>();
 ```
 
-**Név kinyerése a `ValueOf`-al** 
+**A `Név` érték kinyerése a `ValueOf`-al** 
 
 ```csharp
 string nev = Backend.GET(link).Send()
