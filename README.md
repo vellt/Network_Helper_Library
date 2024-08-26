@@ -8,7 +8,7 @@
 
 - **Könyvtár (DLL) letöltése**:
   
-  - Töltsd le a `NetworkHelper.dll` fájlt a [GitHub Releases](https://github.com/vellt/Network_helper_Library/releases) oldalról.
+  - Töltsd le a legújabb `NetworkHelper.dll` fájlt a [GitHub Releases](https://github.com/vellt/Network_helper_Library/releases) oldalról.
 
 - **DLL hozzáadása a projektedhez**:
   
