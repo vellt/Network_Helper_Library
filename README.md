@@ -216,6 +216,15 @@ string nev = Backend.GET(link).Send()
                 .As<string>();
 ```
 
+**A `Név` érték kinyerése a `ValueAt` és `ValueOf`-al** 
+
+```csharp
+string nev = Backend.GET(link).Send()
+                .ValueAt(2)
+                .ValueOf("Nev")
+                .As<string>();
+```
+
 ---
 
 ### Forráskód
