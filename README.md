@@ -119,18 +119,18 @@ Deszerializálja a kiválasztott JSON adatot a megadott típusra.
 **Server response:**
 ```json
 [
-        {
-            "id": 1,
-            "nev": "Kiss Péter",
-            "osztaly": "9.A",
-            "szuletesi_datum": "2007-05-12"
-        },
-        {
-            "id": 2,
-            "nev": "Nagy Anna",
-            "osztaly": "10.B",
-            "szuletesi_datum": "2006-08-23"
-        }
+    {
+        "id": 1,
+        "nev": "Kiss Péter",
+        "osztaly": "9.A",
+        "szuletesi_datum": "2007-05-12"
+    },
+    {
+        "id": 2,
+        "nev": "Nagy Anna",
+        "osztaly": "10.B",
+        "szuletesi_datum": "2006-08-23"
+    }
 ]
 ```
 
