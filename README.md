@@ -192,7 +192,7 @@ A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Netwo
 
 ---
 
-Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egyszerű és érthető legyen. Ha bármilyen kérdésed van, vagy további segítségre van szükséged, ne habozz kapcsolatba lépni a könyvtár fejlesztőivel vagy a közösséggel a [GitHub Issues](https://github.com/vellt/Network_helper_Library/issues) oldalon.
+Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egyszerű és érthető legyen. Ha bármilyen kérdésed van, vagy további segítségre van szükséged, ne habozz kapcsolatba lépni velem a [GitHub Issues](https://github.com/vellt/Network_helper_Library/issues) oldalon.
 
 ---
 
