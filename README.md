@@ -180,9 +180,9 @@ Dolgozo dolgozo= response.ValueOf("data").As<Dolgozo>();
 
 ---
 
-### `ValueOf` és `ValueOf` egymásba ágyazása
+### `ValueAt` és `ValueOf` egymásba ágyazása
 
-Ezen metódusok egymásba ágyazása segíti a komplex responseból a mélyebb szintű részleges adatfeldolgozást.
+Ezen metódusok egymásba ágyazása segíti a komplex responseból a mélyebb szintű részleges adatfeldolgozást. Akár kombinálhatjuk is őket (`ValueAt`-ra `ValueOf` vagy fordítva).
 
 **Komplex server response:**
 
