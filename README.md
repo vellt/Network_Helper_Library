@@ -1,7 +1,7 @@
 # NetworkHelper.dll
 
 - **A NetworkHelper** egy .NET Framework és C# projektekhez készült könyvtár, amely megkönnyíti a backend kommunikációt. A könyvtár egyszerűsíti az HTTP kérések küldését és a JSON válaszok feldolgozását.
-- **Verzió**: v0.1.0
+- **Verzió**: v0.1.2
 - **Támogatott .NET Verziók**: .NET Framework 4.7.2 vagy újabb
 
 ### Első lépések
