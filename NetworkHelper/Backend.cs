@@ -110,7 +110,9 @@ namespace NetworkHelper
 
                 if (typeof(T) == typeof(string))
                 {
-                    return (T)(object)SelectedData;
+                    var result = (T)(object)SelectedData;
+                    SelectedData = JsonData;
+                    return result;
                 }
                 else if (typeof(T) == typeof(DateTime))
                 {
@@ -143,6 +145,7 @@ namespace NetworkHelper
 
                     if (DateTime.TryParseExact(SelectedData, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                     {
+                        SelectedData = JsonData;
                         return (T)(object)parsedDate;
                     }
                     else
@@ -157,6 +160,7 @@ namespace NetworkHelper
                     {
                         throw new InvalidOperationException("Deserialization resulted in a null value.");
                     }
+                    SelectedData = JsonData;
                     return result;
                 }
             }
