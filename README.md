@@ -106,7 +106,7 @@ Response response = Backend.PUT(url).Body(data).Send();
 
 ### `DELETE` Kérés Kiépítése
 
-###### Body-val történő Azonosítás
+**Body-val történő Azonosítás**
 
 A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
@@ -125,7 +125,7 @@ var data = new { id = 11 };
 Response response = Backend.DELETE(url).Body(data).Send();
 ```
 
-###### URL Paraméteres Azonosítás
+**URL Paraméteres Azonosítás**
 
 Az azonosítót az URL tartalmazza, nem szükséges a body láncolat.
 
