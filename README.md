@@ -247,6 +247,7 @@ OpenFileDialog openFileDialog = new OpenFileDialog
 {
     Filter = "Image Files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All Files (*.*)|*.*"
 };
+
 if (openFileDialog.ShowDialog() == true)
 {
     string filePath = openFileDialog.FileName;
