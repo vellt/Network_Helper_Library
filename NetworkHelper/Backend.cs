@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,8 @@ namespace NetworkHelper
         /// <param name="jsonData">A válasz JSON formátumú adata.</param>
         private Response(string jsonData)
         {
-            JsonData = jsonData;
-            SelectedData = jsonData;
+            this.jsonData = jsonData;
+            selectedData = jsonData;
         }
 
         internal static Response Create(string jsonData)
@@ -34,11 +35,11 @@ namespace NetworkHelper
         /// <summary>
         /// A válasz teljes JSON adata.
         /// </summary>
-        private string JsonData { get; }
+        private string jsonData;
         // <summary>
         /// Az éppen kiválasztott JSON (részleges) adat, amely az aktuális feldolgozás eredménye.
         /// </summary>
-        private string SelectedData { get; set; }
+        private string selectedData;
 
         /// <summary>
         /// Kiválasztja a JSON adatban található értéket az adott index alapján.
@@ -51,14 +52,14 @@ namespace NetworkHelper
         {
             try
             {
-                JObject response = JObject.Parse(SelectedData);
+                JObject response = JObject.Parse(selectedData);
                 var keys = response.Properties().Select(p => p.Name).ToList();
 
                 if (index < 0 || index >= keys.Count)
                     throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
 
                 string key = keys[index];
-                SelectedData = response[key]?.ToString();
+                selectedData = response[key]?.ToString();
             }
             catch (JsonException ex)
             {
@@ -82,8 +83,8 @@ namespace NetworkHelper
         {
             try
             {
-                JObject response = JObject.Parse(SelectedData);
-                SelectedData = response[name]?.ToString();
+                JObject response = JObject.Parse(selectedData);
+                selectedData = response[name]?.ToString();
             }
             catch (JsonException ex)
             {
@@ -103,15 +104,15 @@ namespace NetworkHelper
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(SelectedData))
+                if (string.IsNullOrWhiteSpace(selectedData))
                 {
                     throw new InvalidOperationException("SelectedData is null or empty.");
                 }
 
                 if (typeof(T) == typeof(string))
                 {
-                    var result = (T)(object)SelectedData;
-                    SelectedData = JsonData;
+                    var result = (T)(object)selectedData;
+                    selectedData = jsonData;
                     return result;
                 }
                 else if (typeof(T) == typeof(DateTime))
@@ -143,9 +144,9 @@ namespace NetworkHelper
                         "yyyy-MM-ddTHH:mm:ss.fff"        // Pl. "2007-05-12T00:00:00.000"
                     };
 
-                    if (DateTime.TryParseExact(SelectedData, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                    if (DateTime.TryParseExact(selectedData, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                     {
-                        SelectedData = JsonData;
+                        selectedData = jsonData;
                         return (T)(object)parsedDate;
                     }
                     else
@@ -155,12 +156,12 @@ namespace NetworkHelper
                 }
                 else
                 {
-                    var result = JsonConvert.DeserializeObject<T>(SelectedData);
+                    var result = JsonConvert.DeserializeObject<T>(selectedData);
                     if (result == null)
                     {
                         throw new InvalidOperationException("Deserialization resulted in a null value.");
                     }
-                    SelectedData = JsonData;
+                    selectedData = jsonData;
                     return result;
                 }
             }
@@ -171,6 +172,106 @@ namespace NetworkHelper
             catch (Exception ex)
             {
                 throw new InvalidOperationException("An error occurred during deserialization.", ex);
+            }
+        }
+    }
+
+    public class UploadBuilder
+    {
+        private string url;
+        private byte[] fileBytes;
+        private string filePath;
+        private UploadBuilder(string url)
+        {
+            this.url = url;
+        }
+        internal static UploadBuilder Create(string from)
+        {
+            if (string.IsNullOrEmpty(from))
+            {
+                throw new ArgumentException("URL cannot be null or empty.");
+            }
+            return new UploadBuilder(from);
+        }
+
+        public UploadBuilder File(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentException("File path cannot be null or empty.");
+            }
+
+            this.filePath = filePath;
+
+            try
+            {
+                // Olvassuk be a fájlt byte tömbbé
+                fileBytes = System.IO.File.ReadAllBytes(this.filePath);
+                return this;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response> SendAsync()
+        {
+            try
+            {
+
+                using (HttpClient client = new HttpClient())
+                {
+                    using (MultipartFormDataContent form = new MultipartFormDataContent())
+                    {
+                        // Hozzáadjuk a fájlt a form-hoz
+                        ByteArrayContent fileContent = new ByteArrayContent(fileBytes);
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                        form.Add(fileContent, "file", Path.GetFileName(filePath)); // "file" az a mezőnév, amit a szerver vár
+
+                        // HTTP POST kérés küldése
+                        HttpResponseMessage response = await client.PostAsync(url, form);
+
+                        // Ellenőrizzük, hogy a válasz sikeres volt-e
+                        response.EnsureSuccessStatusCode();
+                        string json = await response.Content.ReadAsStringAsync();
+                        return Response.Create(jsonData: json);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Response Send()
+        {
+            try
+            {
+
+                using (HttpClient client = new HttpClient())
+                {
+                    using (MultipartFormDataContent form = new MultipartFormDataContent())
+                    {
+                        // Hozzáadjuk a fájlt a form-hoz
+                        ByteArrayContent fileContent = new ByteArrayContent(fileBytes);
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                        form.Add(fileContent, "file", Path.GetFileName(filePath)); // "file" az a mezőnév, amit a szerver vár
+
+                        // HTTP POST kérés küldése
+                        HttpResponseMessage response = client.PostAsync(url, form).Result;
+
+                        // Ellenőrizzük, hogy a válasz sikeres volt-e
+                        response.EnsureSuccessStatusCode();
+                        string json= response.Content.ReadAsStringAsync().Result;
+                        return Response.Create(jsonData: json);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
@@ -301,6 +402,8 @@ namespace NetworkHelper
         /// <param name="url">Az URL a kéréshez.</param>
         /// <returns>A DELETE kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
         public static RequestBuilder DELETE(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
+
+        public static UploadBuilder UPLOAD(string from) => UploadBuilder.Create(from);
     }
 }
 

@@ -1,2 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="NetworkHelper.Response">
+    <Position X="3.5" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAABAAAAAIACAAAAAAAQEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Backend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkHelper.UploadBuilder">
+    <Position X="10" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAAAAAAAAAAEAAAAAAAAAMAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Backend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkHelper.RequestBuilder">
+    <Position X="6.25" Y="1" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAEABAACAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Backend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkHelper.Backend">
+    <Position X="0.5" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAEAQAAAAAAAAAAACAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Backend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
