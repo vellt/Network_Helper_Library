@@ -1,7 +1,7 @@
 # NetworkHelper.dll
 
 - **A NetworkHelper** egy .NET Framework és C# projektekhez készült könyvtár, amely megkönnyíti a backend kommunikációt. A könyvtár egyszerűsíti az HTTP kérések küldését és a JSON válaszok feldolgozását.
-- **Verzió**: v0.1.2
+- **Verzió**: v0.1.3
 - **Támogatott .NET Verziók**: .NET Framework 4.7.2 vagy újabb
 
 ### Első lépések
@@ -227,6 +227,40 @@ string nev = Backend.GET(link).Send()
 
 ---
 
+### Fájlfeltöltés
+
+**Szerver válasz formátuma**: sikeres feltöltéskor visszatér a fájl nevével, a data tulajdonságba helyezve.
+```json
+{
+    "message": "Fájl sikeresen feltöltve.",
+    "status": "success",
+    "data": "3126503.png"
+}
+```
+
+**Fájl feltöltése, válasz megjelenítése**
+
+Fájl útvonálának kiválasztásához érdemes a OpenFileDialog-ot használni WPF esetében. A kódrészletben kiválasztom a képet, és útvonalát eltárolom a filePath változóban.
+
+```csharp
+OpenFileDialog openFileDialog = new OpenFileDialog
+{
+    Filter = "Image Files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All Files (*.*)|*.*"
+};
+if (openFileDialog.ShowDialog() == true)
+{
+    string filePath = openFileDialog.FileName;
+
+    string url = "http://localhost:3000/upload";
+    Response response = Backend.UPLOAD(url).File(filePath).Send();
+
+    // megjelenítem a válaszüzenetet
+    MessageBox.Show(response.ValueOf("message").As<string>());
+}
+```
+
+---
+
 ### Forráskód
 
 A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Network_Helper_Library/blob/master/NetworkHelper/Backend.cs)
@@ -235,7 +269,7 @@ A teljes forráskód elérhető itt: [Backend.cs](https://github.com/vellt/Netwo
 
 ### Könyvtár szerkezete
 
-<img width="500" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/297de578-e70c-4f6c-b864-7d15f1932141">
+<img width="878" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/537d101e-9878-4cfe-97d7-571af40beee8">
 
 ---
 
