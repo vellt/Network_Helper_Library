@@ -89,9 +89,6 @@ Student student = new Student { name = "Bela" };
 Response response = Backend.PUT(url).Body(student).Send();
 ```
 
-> Anonim típussal (new { name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságo(ka)t (pl name):
-> `Backend.PUT(url).Body(new { name = "Bela" }).Send();`
-
 ---
 
 ### `DELETE` Kérés Kiépítése
