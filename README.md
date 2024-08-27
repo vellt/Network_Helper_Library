@@ -229,6 +229,10 @@ string nev = Backend.GET(link).Send()
 
 ### Fájlfeltöltés
 
+```csharp
+Backend.UPLOAD(url).File(filePath).Send();
+```
+
 **Szerver válasz formátuma**: sikeres feltöltéskor visszatér a fájl nevével, a data tulajdonságba helyezve.
 ```json
 {
