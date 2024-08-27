@@ -62,7 +62,7 @@ Response response = Backend.POST(url).Body(student).Send();
 
 ### `PUT` Kérés Kiépítése
 
-###### Body-val történő Azonosítás
+**Body-val történő Azonosítás**
 
 A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
@@ -76,7 +76,7 @@ Student student = new Student
 Response response = Backend.PUT(url).Body(student).Send();
 ```
 
-Anonim típussal (new { id = 11, name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságokat (pl id, name)
+> Anonim típussal (new { id = 11, name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságokat (pl id, name)
 
 ```csharp
 string url = "http://localhost:3000/students";
@@ -84,7 +84,7 @@ var data = new { id = 11, name = "Bela"};
 Response response = Backend.PUT(url).Body(data).Send();
 ```
 
-###### URL Paraméteres Azonosítás
+**URL Paraméteres Azonosítás**
 
 A body felhasználása opcionális: ha nincs szükséged adatok küldésére, a body-t kihagyhatod.
 
@@ -94,7 +94,7 @@ Student student = new Student { name = "Bela" };
 Response response = Backend.PUT(url).Body(student).Send();
 ```
 
-Anonim típussal (new { name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságo(ka)t (pl name)
+> Anonim típussal (new { name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságo(ka)t (pl name)
 
 ```csharp
 string url = "http://localhost:3000/students/11";
@@ -117,7 +117,7 @@ Response response = Backend.DELETE(url)
                            .Send();
 ```
 
-Anonim típussal (new { id = 11 }) is dolgozhatunk, azonosítás céljából. A lényeg, hogy tartalmazza a szükséges tulajdonságot (pl id)
+> Anonim típussal (new { id = 11 }) is dolgozhatunk, azonosítás céljából. A lényeg, hogy tartalmazza a szükséges tulajdonságot (pl id)
 
 ```csharp
 string url = "http://localhost:3000/students";
