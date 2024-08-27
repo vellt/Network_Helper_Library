@@ -79,9 +79,7 @@ Response response = Backend.PUT(url).Body(student).Send();
 > Anonim típussal (new { id = 11, name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságokat (pl id, name)
 
 ```csharp
-string url = "http://localhost:3000/students";
-var data = new { id = 11, name = "Bela"};
-Response response = Backend.PUT(url).Body(data).Send();
+Response response = Backend.PUT(url).Body(new { id = 11, name = "Bela"}).Send();
 ```
 
 **URL Paraméteres Azonosítás**
@@ -97,9 +95,7 @@ Response response = Backend.PUT(url).Body(student).Send();
 > Anonim típussal (new { name = "Bela" }) is dolgozhatunk adatküldéskor. A lényeg, hogy tartalmazza a szükséges tulajdonságo(ka)t (pl name)
 
 ```csharp
-string url = "http://localhost:3000/students/11";
-var data = new { name = "Bela" };
-Response response = Backend.PUT(url).Body(data).Send();
+Response response = Backend.PUT(url).Body(new { name = "Bela" }).Send();
 ```
 
 ---
@@ -120,9 +116,7 @@ Response response = Backend.DELETE(url)
 > Anonim típussal (new { id = 11 }) is dolgozhatunk, azonosítás céljából. A lényeg, hogy tartalmazza a szükséges tulajdonságot (pl id)
 
 ```csharp
-string url = "http://localhost:3000/students";
-var data = new { id = 11 };
-Response response = Backend.DELETE(url).Body(data).Send();
+Response response = Backend.DELETE(url).Body(new { id = 11 }).Send();
 ```
 
 **URL Paraméteres Azonosítás**
