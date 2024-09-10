@@ -288,5 +288,5 @@ Ez a dokumentáció biztosítja, hogy a NetworkHelper könyvtár használata egy
 
 ---
 
-# [‼️ Minta Projektért Kattints Ide ‼️](https://github.com/vellt/minta_projekt_networkhelper)
+# [‼️ Mintaprojektért Kattints Ide ‼️](https://github.com/vellt/mintaprojekt_networkhelper)
 
