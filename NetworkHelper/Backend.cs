@@ -61,13 +61,9 @@ namespace NetworkHelper
                 string key = keys[index];
                 selectedData = response[key]?.ToString();
             }
-            catch (JsonException ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("Failed to parse JSON data.", ex);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                throw new InvalidOperationException("Invalid index provided.", ex);
+                throw;
             }
 
             return this;
@@ -86,9 +82,9 @@ namespace NetworkHelper
                 JObject response = JObject.Parse(selectedData);
                 selectedData = response[name]?.ToString();
             }
-            catch (JsonException ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("Failed to parse JSON data.", ex);
+                throw;
             }
 
             return this;
@@ -165,13 +161,9 @@ namespace NetworkHelper
                     return result;
                 }
             }
-            catch (JsonException ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("Failed to deserialize JSON data.", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("An error occurred during deserialization.", ex);
+                throw;
             }
         }
     }
@@ -209,9 +201,9 @@ namespace NetworkHelper
                 fileBytes = System.IO.File.ReadAllBytes(this.filePath);
                 return this;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -239,9 +231,9 @@ namespace NetworkHelper
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -269,9 +261,9 @@ namespace NetworkHelper
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
     }
@@ -282,6 +274,7 @@ namespace NetworkHelper
     public class RequestBuilder
     {
         private WebRequest request;
+
 
         // Privát konstruktor, hogy külső példányosítás ne legyen lehetséges
         private RequestBuilder(string method, string url)
@@ -338,9 +331,9 @@ namespace NetworkHelper
                 }
                 throw new Exception("Response is null.");
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("Failed to get response from server.", ex);
+                throw;
             }
         }
 
@@ -363,9 +356,9 @@ namespace NetworkHelper
                     return Response.Create(jsonData: json);
                 }
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("Failed to get response from server.", ex);
+                throw;
             }
         }
     }
@@ -375,35 +368,12 @@ namespace NetworkHelper
     /// </summary>
     public static class Backend
     {
-        /// <summary>
-        /// Létrehozza a GET kéréshez használható <see cref="RequestBuilder"/> példányt.
-        /// </summary>
-        /// <param name="url">Az URL a kéréshez.</param>
-        /// <returns>A GET kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
-        public static RequestBuilder GET(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
-
-        /// <summary>
-        /// Létrehozza a POST kéréshez használható <see cref="RequestBuilder"/> példányt.
-        /// </summary>
-        /// <param name="url">Az URL a kéréshez.</param>
-        /// <returns>A POST kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
-        public static RequestBuilder POST(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
-
-        /// <summary>
-        /// Létrehozza a PUT kéréshez használható <see cref="RequestBuilder"/> példányt.
-        /// </summary>
-        /// <param name="url">Az URL a kéréshez.</param>
-        /// <returns>A PUT kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
-        public static RequestBuilder PUT(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
-
-        /// <summary>
-        /// Létrehozza a DELETE kéréshez használható <see cref="RequestBuilder"/> példányt.
-        /// </summary>
-        /// <param name="url">Az URL a kéréshez.</param>
-        /// <returns>A DELETE kéréshez használható <see cref="RequestBuilder"/> példány.</returns>
-        public static RequestBuilder DELETE(string from) => RequestBuilder.Create(MethodBase.GetCurrentMethod().Name, from);
-
+        public static RequestBuilder GET(string from) => RequestBuilder.Create("GET", from);
+        public static RequestBuilder POST(string from) => RequestBuilder.Create("POST", from);
+        public static RequestBuilder PUT(string from) => RequestBuilder.Create("PUT", from);
+        public static RequestBuilder DELETE(string from) => RequestBuilder.Create("DELETE", from);
         public static UploadBuilder UPLOAD(string from) => UploadBuilder.Create(from);
+
     }
 }
 
